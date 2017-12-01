@@ -1,0 +1,11 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "plugins": ["react", "jsx-a11y", "import"],
+  "rules": {
+    "react/prefer-stateless-function": "off",
+    "import/extensions": "off",
+    "react/no-danger": "off",
+    "class-methods-use-this": "off"
+  }
+}
