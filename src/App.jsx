@@ -7,15 +7,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Note title="Make a listasasasasa" />
-        <br />
-        <br />
-        <br />
-        <Note note="abc" />
-        <br />
-        <br />
-        <br />
-        <Note note="abc" title="Make a listasasasasa" />
+        <Note note="Done with a note? Use the archive " title="Make a listasasasasa" />
       </div>
     );
   }

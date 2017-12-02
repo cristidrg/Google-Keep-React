@@ -69,8 +69,29 @@ class Note extends Component {
   }
 
   render() {
+    const characters = this.props.note.length;
+    let noteText = this.props.note;
+    if (noteText.length > 400) {
+      noteText = `${noteText.substring(0, 400)}...`;
+    }
+
+    const maxWordLength = noteText
+      .replace(/\n/g, ' ')
+      .split(' ')
+      .map(word => word.length)
+      .reduce((acc, word) => (acc > word ? acc : word));
+
+    let fontSizeNo = [[5, 29], [7, 50], [10, 116], [12, 150]].findIndex(tuple => tuple[0] > maxWordLength && tuple[1] > characters);
+
+    if (fontSizeNo === -1) {
+      fontSizeNo = 3;
+    }
+
     const pinClass = `note-card__pin ${this.state.pinned ? 'note-card__pin--pinned' : ''}`;
     const titleClass = `note-card__title ${this.props.title.length === 0 ? 'invisible' : ''}`;
+    const textboxClass = `note-card__textbox note-card__textbox--font-size-${fontSizeNo}`;
+    const textboxText = noteText.split(/\r\n|\r|\n/g).join('<br >');
+
     return (
       <div className="note-card">
         <div
@@ -95,9 +116,11 @@ class Note extends Component {
             aria-pressed={this.state.pinned}
             tabIndex="0"
           />
-          <div role="textbox" className="note-card__textbox">
-            {this.props.note}
-          </div>
+          <div
+            role="textbox"
+            className={textboxClass}
+            dangerouslySetInnerHTML={{ __html: textboxText }}
+          />
           <div role="toolbar" className="note-card__toolbar">
             <div role="button" className="note-card__toolbar__remind" />
             <div role="button" className="note-card__toolbar__collaborator" />
