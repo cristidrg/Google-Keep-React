@@ -2,56 +2,6 @@
   width: 240px;
 }
 
-.note-card__select > svg:focus {
-  outline: none;
-}
-
-.note-card__select:focus {
-  outline: none;
-  border: 1px solid red;
-}
-
-.note-card__select svg {
-  cursor: pointer;
-  height: 24px;
-  width: 18px;
-}
-
-.note-card__select {
-  background-color: #fff;
-  background-size: 14px 14px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  position: absolute;
-  left: 0;
-  border: 1px solid transparent;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 18px 18px;
-  height: 24px;
-  width: 24px;
-  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1);
-  transform: translate(-7px, -7px);
-  transition: background-color 0.218s linear, opacity 0.218s linear,
-    transform 0.218s linear;
-  z-index: 205;
-}
-
-.note-card__select[aria-pressed="true"] {
-  background-color: #6f6f6f;
-  transform: translate(-9px, -9px);
-}
-
-.note-card__select[aria-pressed="true"] svg {
-  fill: #ffffff;
-}
-
-.note-card__select[aria-pressed="true"] + .note-card__container {
-  box-shadow: 0 0 0 4px #6f6f6f;
-}
-
 .note-card__container {
   border-radius: 2px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
@@ -75,73 +25,6 @@
   word-break: break-all;
   word-wrap: break-word;
   text-overflow: ellipsis;
-}
-
-.note-card__pin {
-  position: absolute;
-  right: 4px;
-  top: 5px;
-  height: 26px;
-  width: 26px;
-}
-
-.note-card__pin svg {
-  height: 18px;
-  width: 18px;
-  margin: 3px;
-  fill: rgba(0, 0, 0, 0.54);
-  transition: fill 0.218s linear;
-  cursor: pointer;
-}
-
-.note-card__pin svg:hover {
-  fill: rgba(0, 0, 0, 0.87);
-}
-
-.note-card__pin[aria-pressed="true"] svg {
-  fill: #4285f4;
-}
-
-.note-card__pin[aria-pressed="true"] svg:hover {
-  fill: #4285f4;
-}
-
-.note-card__pin:focus,
-.note-card__pin svg:focus {
-  outline: none;
-}
-
-.note-card__pin:focus > svg {
-  outline: 1px solid #000;
-}
-
-.note-card__textbox {
-  font-family: "Roboto Slab", "Times New Roman", serif;
-  padding: 12px 15px 15px 15px;
-}
-
-.note-card__textbox--font-size-0 {
-  font-size: 48px;
-  font-weight: 100;
-  line-height: 60px;
-}
-
-.note-card__textbox--font-size-1 {
-  font-size: 36px;
-  font-weight: 100;
-  line-height: 48px;
-}
-
-.note-card__textbox--font-size-2 {
-  font-size: 24px;
-  font-weight: 300;
-  line-height: 36px;
-}
-
-.note-card__textbox--font-size-3 {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 22px;
 }
 
 .note-card__toolbar {
