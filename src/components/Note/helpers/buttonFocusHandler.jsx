@@ -44,9 +44,10 @@ function buttonFocusHandler(Button) {
     }
 
     render() {
-      return (
-        <Button onMouseDown={this.handleMouseDown} onKeyDown={this.handleKeyDown} {...this.props} />
-      );
+      return Button(Object.assign({}, this.props, {
+        onMouseDown: this.handleMouseDown,
+        onKeyDown: this.handleKeyDown,
+      }));
     }
   }
 
