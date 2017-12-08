@@ -8,6 +8,9 @@ class App extends Component {
     return (
       <div className="App">
         <Note note="Done with a note? Use the archive " title="Make a listasasasasa" />
+        <br />
+        <br />
+        <Note takeANote />
       </div>
     );
   }

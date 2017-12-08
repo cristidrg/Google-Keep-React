@@ -1,16 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import './Textbox.css';
+
+import strings from '../strings';
 
 const fontSizeTresholds = [[5, 29], [7, 50], [10, 116], [12, 150]];
 
 const defaultProps = {
   note: '',
+  takeANote: false,
 };
 
 const propTypes = {
   note: PropTypes.string,
+  takeANote: PropTypes.bool,
 };
 
 class Textbox extends React.Component {
@@ -25,6 +30,15 @@ class Textbox extends React.Component {
   }
 
   getTextboxClass() {
+    const textBoxClass = {
+      'note-card__textbox': true,
+      'note-card__textbox--take-note': this.props.takeANote,
+    };
+
+    if (this.props.takeANote) {
+      return classNames(textBoxClass);
+    }
+
     const characters = this.props.note.length;
     let noteText = this.props.note;
     if (noteText.length > 400) {
@@ -44,7 +58,8 @@ class Textbox extends React.Component {
       fontSizeNo = 3;
     }
 
-    return `note-card__textbox note-card__textbox--font-size-${fontSizeNo}`;
+    textBoxClass[`note-card__textbox--font-size-${fontSizeNo}`] = true;
+    return classNames(textBoxClass);
   }
 
   render() {
@@ -60,6 +75,8 @@ class Textbox extends React.Component {
         role="textbox"
         className={textboxClass}
         dangerouslySetInnerHTML={{ __html: textboxText }}
+        contentEditable={this.props.takeANote}
+        {...(this.props.takeANote ? { 'data-placeholder': strings.takeANote } : {})}
       />
     );
   }

@@ -1,6 +1,11 @@
 .note-card__textbox {
+  cursor: default;
   font-family: "Roboto Slab", "Times New Roman", serif;
   padding: 12px 15px 15px 15px;
+}
+
+.note-card__textbox:focus {
+  outline: none;
 }
 
 .note-card__textbox--font-size-0 {
@@ -25,4 +30,22 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 22px;
+}
+
+.note-card__textbox:empty:before {
+  cursor: text;
+  content: attr(data-placeholder);
+}
+
+.note-card__textbox[contenteditable="true"] {
+  font-size: 14px;
+  line-height: 19px;
+  min-height: 46px;
+  padding: 12px 15px 15px 15px;
+}
+
+/* attribute check for extra specificity on min-height */
+.note-card__textbox--take-note[contenteditable="true"] {
+  min-height: 1px;
+  cursor: text;
 }
