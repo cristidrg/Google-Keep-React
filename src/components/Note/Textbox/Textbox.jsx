@@ -16,6 +16,8 @@ const defaultProps = {
 const propTypes = {
   note: PropTypes.string,
   editable: PropTypes.bool,
+  onClick: PropTypes.func,
+  onKeyDown: PropTypes.func,
 };
 
 class Textbox extends React.Component {
@@ -65,13 +67,19 @@ class Textbox extends React.Component {
       .split(/\r\n|\r|\n/g)
       .join('<br >');
 
+    const dynamicAttribs = {
+      onClick: this.props.onClick ? this.props.onClick : undefined,
+      onKeyDown: this.props.onKeyDown ? this.props.onKeyDown : undefined,
+      'data-placeholder': this.props.editable ? strings.takeANote : undefined,
+    };
+
     return (
       <div
         role="textbox"
         className={textboxClass}
         dangerouslySetInnerHTML={{ __html: textboxText }}
         contentEditable={this.props.editable}
-        {...(this.props.editable ? { 'data-placeholder': strings.takeANote } : {})}
+        {...dynamicAttribs}
       />
     );
   }

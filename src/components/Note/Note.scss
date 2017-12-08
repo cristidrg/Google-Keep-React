@@ -1,5 +1,6 @@
 .note-card {
   cursor: default;
+  position: relative;
   width: 240px;
 
   &.note-card--edit-note {
@@ -71,6 +72,7 @@
 
     .note-card__textbox {
       color: rgba(0, 0, 0, 0.54);
+      padding: 12px 15px 15px 15px;
     }
 
     .note-card__toolbar {
@@ -151,6 +153,7 @@
     color: rgba(0, 0, 0, 0.54);
     display: flex;
     flex-wrap: wrap-reverse;
+    min-height: 25px;
     opacity: 0;
     padding: 4px 0px 9px 0px;
     transition-duration: 0.218s;
