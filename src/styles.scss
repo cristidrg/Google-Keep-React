@@ -1,0 +1,22 @@
+@import "./reset.scss";
+
+.invisible {
+  display: none;
+}
+
+.app__header {
+  background-color: #fb0;
+  margin-bottom: 20px;
+  height: 64px;
+  width: 100vw;
+}
+
+.left__column {
+  float: left;
+  height: 100vh;
+  width: 280px;
+}
+
+.content {
+  float: left;
+}
