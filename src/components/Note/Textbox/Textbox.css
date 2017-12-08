@@ -1,7 +1,7 @@
 .note-card__textbox {
   cursor: default;
   font-family: "Roboto Slab", "Times New Roman", serif;
-  padding: 12px 15px 15px 15px;
+  padding: 12px 15px 20px 15px;
 }
 
 .note-card__textbox:focus {
@@ -41,11 +41,11 @@
   font-size: 14px;
   line-height: 19px;
   min-height: 46px;
-  padding: 12px 15px 15px 15px;
 }
 
 /* attribute check for extra specificity on min-height */
-.note-card__textbox--take-note[contenteditable="true"] {
+.note-card__textbox--editable[contenteditable="true"] {
+  color: rgba(0, 0, 0, 0.54);
   min-height: 1px;
   cursor: text;
 }

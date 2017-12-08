@@ -10,12 +10,12 @@ const fontSizeTresholds = [[5, 29], [7, 50], [10, 116], [12, 150]];
 
 const defaultProps = {
   note: '',
-  takeANote: false,
+  editable: false,
 };
 
 const propTypes = {
   note: PropTypes.string,
-  takeANote: PropTypes.bool,
+  editable: PropTypes.bool,
 };
 
 class Textbox extends React.Component {
@@ -30,17 +30,12 @@ class Textbox extends React.Component {
   }
 
   getTextboxClass() {
+    let noteText = this.props.note;
+    const characters = this.props.note.length;
     const textBoxClass = {
       'note-card__textbox': true,
-      'note-card__textbox--take-note': this.props.takeANote,
+      'note-card__textbox--editable': this.props.editable,
     };
-
-    if (this.props.takeANote) {
-      return classNames(textBoxClass);
-    }
-
-    const characters = this.props.note.length;
-    let noteText = this.props.note;
     if (noteText.length > 400) {
       // Substringing should be handled in mapStateToProps
       noteText = `${noteText.substring(0, 400)}...`;
@@ -75,8 +70,8 @@ class Textbox extends React.Component {
         role="textbox"
         className={textboxClass}
         dangerouslySetInnerHTML={{ __html: textboxText }}
-        contentEditable={this.props.takeANote}
-        {...(this.props.takeANote ? { 'data-placeholder': strings.takeANote } : {})}
+        contentEditable={this.props.editable}
+        {...(this.props.editable ? { 'data-placeholder': strings.takeANote } : {})}
       />
     );
   }

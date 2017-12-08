@@ -11,6 +11,9 @@ class App extends Component {
         <br />
         <br />
         <Note takeANote />
+        <br />
+        <br />
+        <Note editMode />
       </div>
     );
   }
