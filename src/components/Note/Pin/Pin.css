@@ -32,6 +32,6 @@
   outline: none;
 }
 
-.note-card__pin:focus > svg {
+body.keyboard-focus .note-card__pin:focus > svg {
   outline: 1px solid #000;
 }

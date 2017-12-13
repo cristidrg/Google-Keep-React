@@ -34,6 +34,9 @@ class Note extends Component {
     };
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.takeNoteExpand = this.takeNoteExpand.bind(this);
+    this.renderTakeANoteButtons = this.renderTakeANoteButtons.bind(this);
+    this.renderToolbarButtons = this.renderToolbarButtons.bind(this);
+    this.renderTextBox = this.renderTextBox.bind(this);
     this.renderTitle = this.renderTitle.bind(this);
     this.setNodeRef = this.setNodeRef.bind(this);
     this.takeANote = this.props.takeANote; // takeANote prop shouldn't change during lifetime
@@ -67,6 +70,17 @@ class Note extends Component {
     this.setState(() => ({
       takeNoteExpand: true,
     }));
+  }
+
+  renderTakeANoteButtons() {
+    if (this.state.takeNoteExpand) {
+      return [
+        <div key={0} role="button" className="note-card__take-note__list" />,
+        <div key={1} role="button" className="note-card__take-note__image" />,
+        <div key={2} role="button" className="note-card__take-note__draw" />,
+      ];
+    }
+    return '';
   }
 
   renderTextBox(editMode) {
@@ -103,6 +117,29 @@ class Note extends Component {
     );
   }
 
+  renderToolbarButtons(editMode) {
+    const defaultButtons = [
+      <div key={0} role="button" className="note-card__toolbar__remind" />,
+      <div key={1} role="button" className="note-card__toolbar__collaborator" />,
+      <div key={2} role="button" className="note-card__toolbar__color" />,
+      <div key={3} role="button" className="note-card__toolbar__image" />,
+      <div key={4} role="button" className="note-card__toolbar__archive" />,
+      <div key={5} role="button" className="note-card__toolbar__more" />,
+    ];
+
+    if (editMode) {
+      defaultButtons.push([
+        <div key={6} role="button" className="note-card__toolbar__undo" aria-disabled="true" />,
+        <div key={7} role="button" className="note-card__toolbar__redo" aria-disabled="true" />,
+        <div key={8} role="button" className="note-card__toolbar__done">
+          {strings.done}
+        </div>,
+      ]);
+    }
+
+    return defaultButtons;
+  }
+
   render() {
     const editMode = this.props.editMode || this.state.takeNoteExpand;
 
@@ -126,45 +163,15 @@ class Note extends Component {
 
     return (
       <div className={noteCardClass} ref={this.setNodeRef}>
-        <Select ariaPressed={this.state.selected} onInteraction={selectNote} />
+        {Select({ ariaPressed: this.state.selected, onInteraction: selectNote })}
         <div className="note-card__container">
           {this.renderTitle(editMode)}
-          <Pin ariaPressed={this.state.pinned} onInteraction={pinNote} />
+          {Pin({ ariaPressed: this.state.pinned, onInteraction: pinNote })}
           {this.renderTextBox(editMode)}
           <div role="toolbar" className="note-card__toolbar">
-            <div role="button" className="note-card__toolbar__remind" />
-            <div role="button" className="note-card__toolbar__collaborator" />
-            <div role="button" className="note-card__toolbar__color" />
-            <div role="button" className="note-card__toolbar__image" />
-            <div role="button" className="note-card__toolbar__archive" />
-            <div role="button" className="note-card__toolbar__more" />
-            {editMode
-              ? [
-                <div
-                  key={0}
-                  role="button"
-                  className="note-card__toolbar__undo"
-                  aria-disabled="true"
-                />,
-                <div
-                  key={1}
-                  role="button"
-                  className="note-card__toolbar__redo"
-                  aria-disabled="true"
-                />,
-                <div key={2} role="button" className="note-card__toolbar__done">
-                  {strings.done}
-                </div>,
-                ]
-              : ''}
+            {this.renderToolbarButtons(editMode)}
           </div>
-          {!this.state.takeNoteExpand
-            ? [
-              <div key={0} role="button" className="note-card__take-note__list" />,
-              <div key={1} role="button" className="note-card__take-note__image" />,
-              <div key={2} role="button" className="note-card__take-note__draw" />,
-              ]
-            : ''}
+          {this.renderTakeANoteButtons()}
         </div>
       </div>
     );

@@ -1,20 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import reducers from './reducers';
+import { Provider } from 'react-redux';
 
 import App from './App.jsx';
+import rootReducer from './reducers/index';
+import setupKeyboardFocus from './setupKeyboardFocus.js';
 
 const MOUNT_NODE = document.getElementById('app');
-const store = createStore(reducers, {
-  notes: {
-    note1: {
-      title: 'My note',
-      note: "What's up",
-    },
-  },
-});
+const BODY_NODE = document.querySelector('body');
+
+const store = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
+
+setupKeyboardFocus(document, BODY_NODE);
 
 ReactDOM.render(
   <Provider store={store}>

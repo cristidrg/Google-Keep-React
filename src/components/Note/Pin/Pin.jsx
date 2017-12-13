@@ -8,8 +8,15 @@ import strings from '../strings';
 
 const propTypes = {
   ariaPressed: PropTypes.bool.isRequired,
-  onMouseDown: PropTypes.func.isRequired,
-  onKeyDown: PropTypes.func.isRequired,
+  onInteraction: PropTypes.func.isRequired,
+};
+
+const handleKeyDown = onInteraction => (event) => {
+  if (event.keyCode === 13 || event.keyCode === 32) {
+    // Prevent the default action to stop scrolling when space is pressed
+    event.preventDefault();
+    onInteraction.onInteraction();
+  }
 };
 
 const Pin = props => (
@@ -20,8 +27,8 @@ const Pin = props => (
     aria-label={strings.pinAria}
     aria-pressed={props.ariaPressed}
     tabIndex="0"
-    onMouseDown={props.onMouseDown}
-    onKeyDown={props.onKeyDown}
+    onClick={props.onInteraction}
+    onKeyDown={handleKeyDown(props.onInteraction)}
   />
 );
 

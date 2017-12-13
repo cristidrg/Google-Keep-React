@@ -2,16 +2,6 @@
   opacity: 1;
 }
 
-.note-card__select > svg:focus {
-  outline: none;
-}
-
-.note-card__select:focus {
-  border: 1px solid red;
-  opacity: 1;
-  outline: none;
-}
-
 .note-card__select svg {
   cursor: pointer;
   height: 24px;
@@ -53,4 +43,15 @@
 
 .note-card__select[aria-pressed="true"] + .note-card__container {
   box-shadow: 0 0 0 4px #6f6f6f;
+}
+
+.note-card__select:focus,
+.note-card__select > svg:focus {
+  outline: none;
+}
+
+body.keyboard-focus .note-card__select:focus {
+  border: 1px solid red;
+  opacity: 1;
+  outline: none;
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import './styles.scss';
 import Note from './components/Note';
+import NoteList from './components/NoteList/';
 
 class App extends Component {
   render() {
@@ -10,9 +11,7 @@ class App extends Component {
         <header className="app__header" />
         <div className="left__column" />
         <div className="content">
-          <Note note="Done with a note? Use the archive " title="Make a listasasasasa" />
-          <br />
-          <br />
+          <NoteList />
           <Note takeANote />
           <br />
           <br />

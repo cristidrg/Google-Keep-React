@@ -11,8 +11,11 @@ const propTypes = {
 };
 
 // Handles focus for buttons with inner contents
+// I stopped using this method since I had to put a tabindex == -1 in the contents of my svg
+// and had to wrap my button in this enhanced component
+// The new focus handler is in /keep-clone/src/setupKeyboardFocus.js
+// The problem is described here: http://kizu.ru/en/blog/keyboard-only-focus/#x
 function buttonFocusHandler(Button) {
-  // http://kizu.ru/en/blog/keyboard-only-focus/#x
   class _EnhancedButton extends React.Component {
     constructor(props) {
       super(props);
