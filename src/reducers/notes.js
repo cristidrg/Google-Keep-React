@@ -1,7 +1,7 @@
 import shortid from 'shortid';
 
-const notesAction = {
-  ADD: 'ADD',
+const actionType = {
+  ADD: 'NOTES_ADD',
 };
 
 const initialState = [
@@ -14,13 +14,13 @@ const initialState = [
 
 function notes(state = initialState, action) {
   switch (action.type) {
-    case notesAction.ADD:
+    case actionType.ADD:
       return [...state, action.payload];
     default:
       return state;
   }
 }
 
-export { notesAction, notes };
+export { actionType, notes };
 
 export default notes;

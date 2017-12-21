@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import './styles.scss';
 import Note from './components/Note';
 import NoteList from './components/NoteList/';
+import TakeNote from './components/TakeNote/';
+import EditNote from './components/EditNote/';
 
 class App extends Component {
   render() {
@@ -12,10 +14,10 @@ class App extends Component {
         <div className="left__column" />
         <div className="content">
           <NoteList />
-          <Note takeANote />
+          <br />
+          <TakeNote />
           <br />
           <br />
-          <Note editMode />
         </div>
       </div>
     );

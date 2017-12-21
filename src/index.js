@@ -16,7 +16,6 @@ const store = createStore(
 );
 
 setupKeyboardFocus(document, BODY_NODE);
-
 ReactDOM.render(
   <Provider store={store}>
     <App />

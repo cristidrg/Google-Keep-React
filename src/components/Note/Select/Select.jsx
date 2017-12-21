@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './Select.css';
 
 import select from './select.svg';
-import strings from '../strings';
+import strings from '../../../strings';
 
 const propTypes = {
   ariaPressed: PropTypes.bool.isRequired,
@@ -15,7 +15,7 @@ const handleKeyDown = onInteraction => (event) => {
   if (event.keyCode === 13 || event.keyCode === 32) {
     // Prevent the default action to stop scrolling when space is pressed
     event.preventDefault();
-    onInteraction.onInteraction();
+    onInteraction();
   }
 };
 

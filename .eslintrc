@@ -7,6 +7,10 @@
     "import/extensions": "off",
     "react/no-danger": "off",
     "class-methods-use-this": "off",
-    "import/no-named-as-default": "off"
+    "import/no-named-as-default": "off",
+    "func-names": "off",
+    "react/require-default-props": "off",
+    "prefer-template": "off",
+    "no-else-return": "off"
   }
 }

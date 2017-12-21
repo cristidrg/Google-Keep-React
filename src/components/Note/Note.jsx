@@ -8,7 +8,7 @@ import Pin from './Pin';
 import Select from './Select';
 import Textbox from './Textbox';
 
-import strings from './strings';
+import strings from '../../strings';
 
 const defaultProps = {
   title: '',
@@ -73,7 +73,7 @@ class Note extends Component {
   }
 
   renderTakeANoteButtons() {
-    if (this.state.takeNoteExpand) {
+    if (this.props.takeANote && !this.state.takeNoteExpand) {
       return [
         <div key={0} role="button" className="note-card__take-note__list" />,
         <div key={1} role="button" className="note-card__take-note__image" />,

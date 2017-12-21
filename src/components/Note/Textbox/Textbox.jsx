@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import './Textbox.css';
 
-import strings from '../strings';
+import strings from '../../../strings';
 
 const fontSizeTresholds = [[5, 29], [7, 50], [10, 116], [12, 150]];
 
@@ -17,18 +17,20 @@ const propTypes = {
   note: PropTypes.string,
   editable: PropTypes.bool,
   onClick: PropTypes.func,
-  onKeyDown: PropTypes.func,
+  onInput: PropTypes.func,
+  setRef: PropTypes.func,
 };
 
 class Textbox extends React.Component {
   constructor(props) {
     super(props);
     this.getTextboxClass = this.getTextboxClass.bind(this);
+    this.handlePaste = this.handlePaste.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate() {
     // So fast, So optimized, Wow
-    return nextProps.note.length !== this.props.note.length && nextProps.note !== this.props.note;
+    return true; // nextProps.note.length !== this.props.note.length && nextProps.note !== this.props.note;
   }
 
   getTextboxClass() {
@@ -59,6 +61,17 @@ class Textbox extends React.Component {
     return classNames(textBoxClass);
   }
 
+  handlePaste(e) {
+    e.preventDefault();
+    let text = '';
+    if (e.clipboardData && e.clipboardData.getData) {
+      text = e.clipboardData.getData('text/plain');
+    } else if (window.clipboardData && window.clipboardData.getData) {
+      text = window.clipboardData.getData('Text');
+    }
+    document.execCommand('insertHTML', false, text);
+  }
+
   render() {
     const textboxClass = this.getTextboxClass();
     // Substringing should be handled in mapStateToProps
@@ -69,18 +82,23 @@ class Textbox extends React.Component {
 
     const dynamicAttribs = {
       onClick: this.props.onClick ? this.props.onClick : undefined,
-      onKeyDown: this.props.onKeyDown ? this.props.onKeyDown : undefined,
+      onInput: this.props.onInput ? this.props.onInput : undefined,
+      onBlur: this.props.onInput ? this.props.onInput : undefined,
+      onPaste: this.props.onInput ? this.handlePaste : undefined,
       'data-placeholder': this.props.editable ? strings.takeANote : undefined,
+      ref: this.props.setRef ? this.props.setRef : undefined,
+      suppressContentEditableWarning: this.props.editable,
     };
 
     return (
       <div
         role="textbox"
         className={textboxClass}
-        dangerouslySetInnerHTML={{ __html: textboxText }}
         contentEditable={this.props.editable}
         {...dynamicAttribs}
-      />
+      >
+        {this.props.note}
+      </div>
     );
   }
 }

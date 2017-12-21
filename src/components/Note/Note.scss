@@ -72,11 +72,8 @@
 
     .note-card__textbox {
       color: rgba(0, 0, 0, 0.54);
+      min-height: auto;
       padding: 12px 15px 15px 15px;
-    }
-
-    .note-card__toolbar {
-      display: none;
     }
 
     .note-card__take-note__list,

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './Pin.css';
 
 import pin from './pin.svg';
-import strings from '../strings';
+import strings from '../../../strings';
 
 const propTypes = {
   ariaPressed: PropTypes.bool.isRequired,
