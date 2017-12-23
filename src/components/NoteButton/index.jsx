@@ -15,6 +15,16 @@ const propTypes = {
   icon: PropTypes.element,
 };
 
+/**
+ * @ACCESIBILITY
+ * @EVENT_HANDLING
+ * @FP -- FUNCTIONAL_COMPOSITION -- CURRY
+ * This function is used to handle keystrokes on notecard buttons.
+ * All of the buttons must activate when enter or space is pressed as per
+ * W3C accesibility standards. When space is pressed, the browser default
+ * behavior is to scroll down, thus if the button is focused, we must
+ * prevent the scroll.
+ */
 const handleKeyDown = onInteraction => (event) => {
   if (event.keyCode === 13 || event.keyCode === 32) {
     // Prevent the default action to stop scrolling when space is pressed
@@ -23,6 +33,8 @@ const handleKeyDown = onInteraction => (event) => {
   }
 };
 
+// @NOTE in the future, move the svg html to css background svg encoding
+// to reduce html size.
 const NoteButton = (props) => {
   const dynamicAttributes = {};
   if (props.icon) {

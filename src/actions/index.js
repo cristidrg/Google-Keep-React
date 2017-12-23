@@ -1,11 +1,30 @@
-import { actionType } from '../reducers/notes';
+import shortid from 'shortid';
 
-function addNote(noteAttributes) {
+import { actionType, defaultNoteValues } from '../reducers/notes';
+
+function addNote(noteAttribs) {
+  const id = shortid();
   return {
     type: actionType.ADD,
-    payload: Object.assign({}, (({ note, title }) => ({ note, title }))(noteAttributes)),
+    payload: {
+      id: {
+        id,
+        ...Object.assign(defaultNoteValues, noteAttribs),
+      },
+    },
   };
 }
 
-export { addNote };
-export default addNote;
+function selectNote(id) {
+  return {
+    type: actionType.SELECT_NOTE,
+    payload: {
+      id,
+    },
+  };
+}
+
+const actions = Object.assign({}, addNote, selectNote);
+
+export { addNote, selectNote };
+export default actions;

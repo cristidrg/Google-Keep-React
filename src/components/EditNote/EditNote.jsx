@@ -16,7 +16,27 @@ const propTypes = {
   close: PropTypes.func.isRequired,
 };
 
-// In the future this will be a functional component
+/**
+ * @EVENT_HANDLING
+ *  The Edit Note Component has behavior when a user clicks outside of its bounds:
+ *    - When it's used inside TakeNote, it switches to the one line ui.
+ *    - When it's used to edit a note, it returns the person to the main screen.
+ *  An easy way to implement this is to attach a mousedown listener to the document and
+ *  check if the target of the event is inside our component.
+ *
+ *  @PERFORMANCE
+ *    As this is the only time when this kind of behavior is required in the app, it is fine to do it this way, however
+ *    if you find yourself needing this functionaltiy a lot of times, attaching an event listener
+ *    for each component might slow down the performance of the page. A good example for when not to use
+ *    this would be in the list of Notes. Creating a document level event listener for each note would be too much.
+ *
+ * @ES_FEATURE -- Array Destructuring
+ *  This component makes use of several functions to set references on components, most of these setters have
+ *  the same pattern. I made use of array destructuring to shorten my code. The setRef function returns an array
+ *  with two functions that are used by the ref setters/handlers.
+ *
+ * @NOTE In the future this will be a functional component
+ */
 class EditNote extends Component {
   constructor(props) {
     super(props);
@@ -73,7 +93,7 @@ class EditNote extends Component {
 
   saveNote() {
     if (this.titleRef.innerText.trim().length !== 0 || this.noteRef.innerText.trim().length !== 0) {
-      this.props.onDone(this.state);
+      this.props.onDone(this.state.note, this.state.title);
     }
 
     this.setState(() => ({
