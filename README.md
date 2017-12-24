@@ -15,18 +15,18 @@ page if you are interested in collaboration).
 The codebase is full of comments explaining techniques I use, I created several tags to make it easier for employers to check
 specific things:
 
-* [React Best Practices](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%40REACT&type=)
+* [React Best Practices](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40REACT_BP&type=)
   * [Component Design](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=REACT_COMPONENT_DESIGN&type=)
-  * [VDOM](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%40VDOM&type=)
-* [Accessibility](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%40ACCESIBILITY&type=)
-* [Functional Programming](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%40FP&type=)
+  * [VDOM](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40VDOM&type=)
+* [Accessibility](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40ACCESIBILITY&type=)
+* [Functional Programming](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40FP&type=)
   * [Composition](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=FUNCTIONAL_COMPOSITION&type=)
   * [Currying](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=CURRY&type=)
-* [ES5+ Features](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%40ES_FEATURE&type=)
-* [Event Handling](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%40EVENT_HANDLING&type=)
-* [Performance](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%40PERFORMANCE&type=)
-* [Opinionated Stuff](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%40OPINIONATED&type=)
-* [Notes To Self](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%40NOTE&type=)
+* [ES5+ Features](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40ES_FEATURE&type=)
+* [Event Handling](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40EVENT_HANDLING&type=)
+* [Performance](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40PERFORMANCE&type=)
+* [Opinionated Stuff](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40OPINIONATED&type=)
+* [Notes To Self](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40NOTE&type=)
 
 Finding a way to properly showcase my knowledge was challenging, but I believe this systems works great.
 I will try to not repeat myself in my comments and examples.

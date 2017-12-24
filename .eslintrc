@@ -11,6 +11,7 @@
     "func-names": "off",
     "react/require-default-props": "off",
     "prefer-template": "off",
-    "no-else-return": "off"
+    "no-else-return": "off",
+    "linebreak-style": "off", // change this after the holidays
   }
 }

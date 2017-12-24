@@ -1,15 +1,15 @@
 import shortid from 'shortid';
 
-import { actionType, defaultNoteValues } from '../reducers/notes';
+import { actionType } from '../reducers/notes';
 
 function addNote(noteAttribs) {
   const id = shortid();
   return {
     type: actionType.ADD,
     payload: {
-      id: {
+      [id]: {
         id,
-        ...Object.assign(defaultNoteValues, noteAttribs),
+        ...noteAttribs,
       },
     },
   };

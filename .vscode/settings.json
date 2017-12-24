@@ -1,5 +1,8 @@
 {
   "[markdown]": {
     "editor.quickSuggestions": true
+  },
+  "eslint.options": {
+    "configFile": "C:/Google-Keep-React/.eslintrc"
   }
 }

@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Note from '../Note';
+import DumbNote from '../Note/DumbNote.jsx';
 
 const propTypes = {
-  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  notes: PropTypes.object.isRequired,
 };
 
 class NoteList extends Component {
   render() {
     const mapNotes =
       this.props.notes &&
-      this.props.notes.map(note => <Note key={note.id} note={note.note} title={note.title} />);
+      Object.values(this.props.notes).map(note => <DumbNote key={note.id} {...note} />);
     return (
       <div>
         {mapNotes}

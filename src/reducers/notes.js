@@ -3,7 +3,7 @@ const actionType = {
   SELECT_NOTE: 'NOTES_SELECT_NOTE',
 };
 
-const defaultNoteValues = {
+const defaultNoteState = {
   title: '',
   note: '',
   selected: false,
@@ -39,6 +39,6 @@ function notes(state = initialState, action) {
   }
 }
 
-export { actionType, defaultNoteValues, notes };
+export { actionType, defaultNoteState, notes };
 
 export default notes;

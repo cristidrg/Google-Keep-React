@@ -23,7 +23,7 @@ const handlePaste = function (event) {
 };
 
 /**
- * @REACT - @VDOM
+ * @REACT_BP - @VDOM
  * This component abstracts common operations from a contentEditable div. ContentEditable
  * elements go head in head with React's VDOM. When one handles elements which make use
  * of such functionality they must ensure the invariant of keeping React's VDOM in sync

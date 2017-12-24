@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 import strings from '../../strings';
+import { defaultNoteState } from '../../reducers/notes';
 import NoteButton from '../NoteButton/index.jsx';
 
 import Pin from '../Note/Pin';
@@ -40,11 +40,7 @@ const propTypes = {
 class EditNote extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      pinned: false,
-      title: '',
-      note: '',
-    };
+    this.state = defaultNoteState;
     this.renderToolbarButtons = this.renderToolbarButtons.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.saveNote = this.saveNote.bind(this);
@@ -93,13 +89,10 @@ class EditNote extends Component {
 
   saveNote() {
     if (this.titleRef.innerText.trim().length !== 0 || this.noteRef.innerText.trim().length !== 0) {
-      this.props.onDone(this.state.note, this.state.title);
+      this.props.onDone(this.state);
     }
 
-    this.setState(() => ({
-      title: '',
-      note: '',
-    }));
+    this.setState(() => defaultNoteState);
 
     this.props.close();
   }

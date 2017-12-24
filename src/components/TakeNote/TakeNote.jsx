@@ -4,7 +4,7 @@ import EditNote from '../EditNote';
 import strings from '../../strings';
 
 /**
- * @REACT -- REACT_COMPONENT_DESIGN
+ * @REACT_BP -- REACT_COMPONENT_DESIGN
  * This component favors composition making use of EditNote to achieve
  * the take a note functionality which is present at the top of the page.
  *
