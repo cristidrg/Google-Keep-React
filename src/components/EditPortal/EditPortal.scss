@@ -1,0 +1,19 @@
+.editPortal {
+  background-color: rgba(229,229,229,0.75);
+  display: none;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  transition: opacity .218s ease-in;
+  z-index: 4000;
+
+  &.editPortal--visible {
+    display: block;
+  }
+
+  .note-card { //TODO: CALC() THIS LATER
+    left: 645px;
+    top: 207.35px;
+  }
+}

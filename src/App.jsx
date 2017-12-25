@@ -1,23 +1,20 @@
 import React, { Component } from 'react';
 
 import './styles.scss';
-import NoteList from './components/NoteList/';
-import TakeNote from './components/TakeNote/';
+import Layout from './components/Layout/';
+import EditPortal from './components/EditPortal';
 
+/**
+ * @REACT_BP -- Usage of Fragments
+ * Since I want to use a portal in my app, I wanted to use a fragment here rather than putting another div and create a div soup.
+ */
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="app__header" />
-        <div className="left__column" />
-        <div className="content">
-          <NoteList />
-          <br />
-          <TakeNote />
-          <br />
-          <br />
-        </div>
-      </div>
+      <React.Fragment>
+        <Layout />
+        <EditPortal />
+      </React.Fragment>
     );
   }
 }

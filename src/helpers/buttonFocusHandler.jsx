@@ -10,11 +10,18 @@ const propTypes = {
   ariaPressed: PropTypes.bool,
 };
 
-// Handles focus for buttons with inner contents
-// I stopped using this method since I had to put a tabindex == -1 in the contents of my svg
-// and had to wrap my button in this enhanced component
-// The new focus handler is in /keep-clone/src/setupKeyboardFocus.js
-// The problem is described here: http://kizu.ru/en/blog/keyboard-only-focus/#x
+/**
+ * @REACT_BP  --- HOC
+ * @ACCESIBILITY
+ * @EVENT_HANDLING
+ * 
+ * Almost all of the buttons used in the app have a separate design for when they are focused via tab navigation and via
+ * click/enter. Below is a component which made use of the tabIndex == -1 trick described here: http://kizu.ru/en/blog/keyboard-only-focus/#x
+ * I stopped using this approach because I felt like I was unnecesarry oupting html just to solve this trick with pure css. Plus,
+ * every button brought this extra component with it.
+ * 
+ * The approach I have now is in: /keep-clone/src/setupKeyboardFocus.js
+ */ 
 function buttonFocusHandler(Button) {
   class _EnhancedButton extends React.Component {
     constructor(props) {

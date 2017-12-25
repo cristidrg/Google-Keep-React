@@ -15,6 +15,12 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 
+function mapStateToProps(state) {
+  return {
+    mode: state.appMode,
+  };
+}
+
 setupKeyboardFocus(document, BODY_NODE);
 ReactDOM.render(
   <Provider store={store}>

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import EditNote from '../EditNote';
 import strings from '../../strings';
+import { defaultNoteState } from '../../reducers/notes';
 
 /**
  * @REACT_BP -- REACT_COMPONENT_DESIGN
@@ -49,7 +51,7 @@ class TakeNote extends Component {
 
   render() {
     if (this.state.takeNoteExpand) {
-      return <EditNote close={this.takeNoteRetract} />;
+      return <EditNote noteToEdit={defaultNoteState} onClose={this.takeNoteRetract} onDone={this.props.onDone} />;
     } else {
       return (
         <div className="note-card note-card--take-note">
@@ -70,5 +72,9 @@ class TakeNote extends Component {
     }
   }
 }
+
+TakeNote.propTypes = {
+  onDone: PropTypes.func.isRequired,
+};
 
 export default TakeNote;

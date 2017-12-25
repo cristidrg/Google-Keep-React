@@ -1,3 +1,7 @@
+/**
+ * @FP --- Composition
+ * This function allows the execution of its arguments in serial.
+ */
 const join = function () {
   const functions = arguments;
   return function () {

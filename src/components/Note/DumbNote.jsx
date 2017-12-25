@@ -7,8 +7,17 @@ import Pin from './Pin';
 import Select from './Select';
 import Textbox from './Textbox';
 
+function handleKeyDown(action) {
+  return function (event) {
+    if (event.keyCode === 13 || event.keyCode === 32) {
+      event.preventDefault();
+      action();
+    }
+  };
+}
+
 const DumbNote = props => (
-  <div className="note-card">
+  <div className="note-card" onClick={props.focusNote} onKeyDown={handleKeyDown(props.focusNote)}>
     {Select({ ariaPressed: props.selected, onInteraction: props.selectNote })}
     <div className="note-card__container">
       <div className="note-card__title">{props.title}</div>
@@ -33,6 +42,7 @@ DumbNote.propTypes = {
   pinned: PropTypes.bool,
   pinNote: PropTypes.func.isRequired,
   selectNote: PropTypes.func.isRequired,
+  focusNote: PropTypes.func.isRequired,
 };
 
 DumbNote.defaultProps = {

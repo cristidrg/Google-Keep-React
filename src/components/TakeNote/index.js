@@ -7,6 +7,7 @@ function mapStateToProps() {
     takeANote: true,
   };
 }
+
 function mapDispatchToProps(dispatch) {
   return {
     onDone: noteAttributes => dispatch(addNote(noteAttributes)),

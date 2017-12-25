@@ -17,7 +17,9 @@ specific things:
 
 * [React Best Practices](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40REACT_BP&type=)
   * [Component Design](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=REACT_COMPONENT_DESIGN&type=)
+  * [Higher Order Component](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=HOC&type=)
   * [VDOM](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40VDOM&type=)
+* [Redux](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40REDUX&type=)
 * [Accessibility](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40ACCESIBILITY&type=)
 * [Functional Programming](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40FP&type=)
   * [Composition](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=FUNCTIONAL_COMPOSITION&type=)
@@ -29,7 +31,6 @@ specific things:
 * [Notes To Self](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40NOTE&type=)
 
 Finding a way to properly showcase my knowledge was challenging, but I believe this systems works great.
-I will try to not repeat myself in my comments and examples.
 
 I highly suggest playing with the app for five minutes before jumping into the tags, as I will be refering to the certain components
 and functionality in my tags.

@@ -13,5 +13,6 @@
     "prefer-template": "off",
     "no-else-return": "off",
     "linebreak-style": "off", // change this after the holidays
+    "jsx-a11y/no-static-element-interactions": "off",
   }
 }

@@ -2,18 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import strings from '../../strings';
-import { defaultNoteState } from '../../reducers/notes';
 import NoteButton from '../NoteButton/index.jsx';
+import { defaultNoteState } from '../../reducers/notes';
 
 import Pin from '../Note/Pin';
 import Textbox from '../Note/Textbox';
 import ContentEditable from '../ContentEditable';
 
-const defaultProps = {};
-
 const propTypes = {
+  noteToEdit: PropTypes.object.isRequired,
   onDone: PropTypes.func.isRequired,
-  close: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 /**
@@ -40,7 +39,8 @@ const propTypes = {
 class EditNote extends Component {
   constructor(props) {
     super(props);
-    this.state = defaultNoteState;
+    this.state = props.noteToEdit;
+    this.initialState = props.noteToEdit;
     this.renderToolbarButtons = this.renderToolbarButtons.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.saveNote = this.saveNote.bind(this);
@@ -88,13 +88,14 @@ class EditNote extends Component {
   }
 
   saveNote() {
-    if (this.titleRef.innerText.trim().length !== 0 || this.noteRef.innerText.trim().length !== 0) {
+    if (JSON.stringify(this.state) !== JSON.stringify(this.initialState)
+      && (this.titleRef.innerText.trim().length !== 0 || this.noteRef.innerText.trim().length !== 0)) {
       this.props.onDone(this.state);
     }
 
-    this.setState(() => defaultNoteState);
+    this.setState(() => defaultNoteState); // empty fields
 
-    this.props.close();
+    this.props.onClose();
   }
 
   renderToolbarButtons() {
@@ -152,6 +153,5 @@ class EditNote extends Component {
 }
 
 EditNote.propTypes = propTypes;
-EditNote.defaultProps = defaultProps;
 
 export default EditNote;

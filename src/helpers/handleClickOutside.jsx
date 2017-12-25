@@ -1,5 +1,6 @@
 import React from 'react';
 
+//No longer used, functionality is set directly into the EditNote Component
 class HandleClickOutside extends React.Component {
   constructor(props) {
     super(props);

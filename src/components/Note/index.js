@@ -1,3 +1,3 @@
-import Note from './Note.jsx';
+import DumbNote from './DumbNote.jsx';
 
-export default Note;
+export default DumbNote;
