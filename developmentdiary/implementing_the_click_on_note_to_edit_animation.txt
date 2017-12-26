@@ -1,0 +1,68 @@
+Main File to check: EditPortal
+Other files used for this story:
+  NoteList
+  DumbNote
+  Portal
+  EditNote
+  actions and reducers
+
+First, I would suggest clicking on an existing note to see what happens.
+
+When one clicks on a note in order to edit it the following steps occur in the animation:
+ 1) The clicked note will dissapear
+ 2) The portal background and the editing note component appear
+ 3) The editing note component starts from the clicked note position and width/height
+ then it goes to the desired location and dimensions
+
+When the person is finished the steps described above are executed in reverse order. This whole
+animation gives a nice effect which leaves the impression that the original note expands and 
+you interact it with.
+
+Since we are aiming for clean design and best practices for component reusability, we can't simply
+expand the note component the person has clicked and mash the editing functionality in it. This ,however, would be
+the most performant solution in terms of fps/rerenders.
+
+React 16.1 added Portals to its functionality, this would let us put the editing related dom nodes in the correct place
+in the tree. 
+
+In order to achieve the animation from 3) we need the following parameters: initial coordinates, initial width,
+initial height, target coordinates, target width, target height. Widths are both constants, so that's easy to get.
+
+To get the initial coordinates, we can simply ask the note to pass its coordinates on click to the store. While it
+is true that the coordinates can be calculated with just the id of the note, that would involve getting the position
+of the note in the list (which can be O(1) with the reselect library) and then querying the document for specific children
+from either the pinned notes container or the normal notes container. As you can see, too much work.
+
+Now we only need to get the target coordinates and target height. The target coordinates are calculated based on the window size.
+
+The target height however, is the tricky part. We would need a way to know how high the edit a note component will be.
+
+The other tricky part is triggering the transition css feature by passing the correct classes and style attributes***
+Transitions can't make use of auto attributes, thus we need to compute the values beforehand and plug the initial ones,
+then swap them with the target ones.
+
+The first approach I took in solving this problem made use of 3 renders of the EditPortal:
+  render #1) When the EditPortal is notified that there is a focused note available and we are in edit mode it will
+    render an invisible EditNote component to get its height.
+  render #2) Now we change the height of the EditNote to the clicked note height
+  render #3) Now we add the transition class with the target height,width,coords to activate the animation
+
+This method produced clear jank, thus being not performant enough. This happens because all of the renders are triggered in a short timeout in the 
+componentDidUpdate method.
+
+Then I realized that I could cut out a render by letting the EditNote component handle its height while still keeping it
+reusable. Now the steps are:
+ render #1) Set the note's coordinates with and height to the EditNote component
+ render #2) Trigger the animation and tell the EditNote to handle height on its own. 
+
+In order to handle the exit animation, we simply plug back the initial values to the EditNote component and listen
+to the transitionEnd event to dispatch the close event.
+
+
+All of this is coded in the EditPortal Component. Please do check it. 
+
+*** While writing this I just remembered that CSS variables are a thing. My whole implementation avoided the usage of
+CSS animations because the height of the notes was variable, thus I couldn't have a fixed set of classes/keyframes to plug
+or use. If I could go back in time, I would've done it with CSS variables and make use of requestAnimationFrame for even
+better performance. If somebody knows a way to solve this in a different way using SASS please do tell me, currently I only use SASS for its
+nesting, as I haven't spent time learning too much about it.

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
 
 import NoteList from '../NoteList/';
 import TakeNote from '../TakeNote/';
@@ -10,7 +8,7 @@ class Layout extends Component {
     super(props);
     this.handleEditClose = this.handleEditClose.bind(this);
   }
-
+  //TODO DELETE THIS
   handleEditClose() {
     return 0;
   }

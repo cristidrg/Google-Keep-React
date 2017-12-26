@@ -15,27 +15,86 @@ const propTypes = {
   noteToEdit: PropTypes.object,
 };
 
-const EditPortal = (props) => {
-  const editPortalClass = classNames({
-    editPortal: true,
-    'editPortal editPortal--visible': props.mode === appModes.EDIT,
-  });
-  
-  return (
-    <Portal>
-      <div className={editPortalClass}>
-        {props.mode === appModes.EDIT ?
-          <EditNote
-            noteToEdit={props.noteToEdit}
-            onClose={props.onClose}
-            onDone={props.onDone}
-          />
-          : ''
-        }
-      </div>
-    </Portal>
-  );
+const transitions = {
+  WAITING: 'waiting',
+  LOADING: 'loading',
+  EXITING: 'exiting',
 };
+
+// @EVENT_HANDLING @PERFORMANCE -- for a description of this class, check the implementing a click on note animation devDiary.
+class EditPortal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      transition: transitions.WAITING,
+    };
+    this.container = null;
+    this.handleClose = this.handleClose.bind(this);
+    this.setContainerRef = this.setContainerRef.bind(this);
+    this.handleTransitionEnd = this.handleTransitionEnd.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.mode !== appModes.EDIT && this.props.mode === appModes.EDIT) {
+      setTimeout(() => {
+        this.setState(() => ({ transition: transitions.LOADING }));
+      }, 50);
+    }
+  }
+
+  setContainerRef(node) {
+    this.container = node;
+  }
+
+  handleClose() {
+    this.setState(() => ({ transition: transitions.EXITING }));
+  }
+
+  handleTransitionEnd() {
+    if (this.state.transition === transitions.EXITING) {
+      this.props.onClose();
+      this.setState(() => ({ transition: transitions.WAITING}));
+    }
+  }
+
+  render() {
+    let rootStyle, containerStyle;
+    const editPortalClass = classNames({
+      editPortal: true,
+      position1: this.state.transition === transitions.LOADING,
+      'editPortal editPortal--visible': this.props.mode === appModes.EDIT,
+    });
+
+    if (this.props.mode === appModes.EDIT) {
+      rootStyle = {
+        top: this.props.noteCoords.top,
+        left: this.props.noteCoords.left,
+      };
+      containerStyle = {
+        opacity: 0,
+        height: this.props.noteCoords.height + 'px',
+      };
+    }
+
+    return (
+      <Portal>
+        <div ref={this.setContainerRef} onTransitionEnd={this.handleTransitionEnd} className={editPortalClass}>
+          {this.props.mode === appModes.EDIT ?
+            <EditNote
+              noteToEdit={this.props.noteToEdit}
+              onClose={this.handleClose}
+              onDone={this.props.onDone}
+              rootStyle={rootStyle}
+              containerStyle={containerStyle}
+              autoSetHeight={this.state.transition === transitions.LOADING}
+            />
+            : ''
+          }
+        </div>
+      </Portal>
+    );
+  }
+}
 
 EditPortal.propTypes = propTypes;
 

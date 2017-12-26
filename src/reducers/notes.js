@@ -17,7 +17,7 @@ const initialState = {
 };
 
 /**
- * @REDUX -- State Design
+ * @REDUXING -- State Design
  * Whenever I have a list of data which is used often accross the app and affects other state members I like to structure it as above,
  * using the ids of each item as a key and also giving the id to the values. Since arrays and objects in javascript are the same thing,
  * using this approach gives O(1) access to invidual items, and other cool fuctionalities by computing various maps using ids and row values

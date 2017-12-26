@@ -33,7 +33,7 @@ const handleKeyDown = onInteraction => (event) => {
   }
 };
 
-// @NOTE in the future, move the svg html to css background svg encoding
+// @TODO in the future, move the svg html to css background svg encoding
 // to reduce html size.
 const NoteButton = (props) => {
   const dynamicAttributes = {};

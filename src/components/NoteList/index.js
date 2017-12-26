@@ -5,13 +5,14 @@ import NoteList from './NoteList.jsx';
 function mapStateToProps(state) {
   return {
     notes: state.notes,
+    focusedNoteId: state.focusedNote.id,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     selectNote: id => () => dispatch(selectNote(id)),
-    focusNote: id => () => dispatch(focusNote(id)),
+    focusNote: (id, coords) => dispatch(focusNote(id, coords)),
   };
 }
 

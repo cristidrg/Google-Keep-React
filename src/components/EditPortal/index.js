@@ -6,7 +6,8 @@ import EditPortal from './EditPortal.jsx';
 function mapStateToProps(state) {
   return {
     mode: state.appMode,
-    noteToEdit: state.notes[state.focusedNote],
+    noteToEdit: state.notes[state.focusedNote.id],
+    noteCoords: state.focusedNote.coords,
   };
 }
 

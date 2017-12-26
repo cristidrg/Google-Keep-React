@@ -17,12 +17,12 @@ function appMode(state = appModes.NORMAL, action) {
   }
 }
 
-function focusedNote(state = null, action) {
+function focusedNote(state = {}, action) {
   switch (action.type) {
     case actionType.FOCUS_NOTE:
       return action.payload;
     case actionType.UNFOCUS_NOTE:
-      return null;
+      return {};
     default:
       return state;
   }

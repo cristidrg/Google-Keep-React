@@ -9,7 +9,14 @@ import Pin from '../Note/Pin';
 import Textbox from '../Note/Textbox';
 import ContentEditable from '../ContentEditable';
 
+const defaultProps = {
+  autoSetHeight: false,
+  rootStyle: {},
+  containerStyle: {},
+};
+
 const propTypes = {
+  autoSetHeight: PropTypes.bool,
   noteToEdit: PropTypes.object.isRequired,
   onDone: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
@@ -34,7 +41,7 @@ const propTypes = {
  *  the same pattern. I made use of array destructuring to shorten my code. The setRef function returns an array
  *  with two functions that are used by the ref setters/handlers.
  *
- * @NOTE In the future this will be a functional component
+ * @TODO In the future this will be a functional component
  */
 class EditNote extends Component {
   constructor(props) {
@@ -79,6 +86,11 @@ class EditNote extends Component {
         }
       },
     ];
+  }
+
+  //TODO: IMPLEMENT THIS LATER
+  calculateHeight() {
+    return '140px';
   }
 
   handleClickOutside(event) {
@@ -126,9 +138,16 @@ class EditNote extends Component {
       this.setState(prevState => ({
         pinned: !prevState.pinned,
       }));
+
+  
+    const containerStyle = Object.assign({}, this.props.containerStyle);
+    if (this.props.autoSetHeight) {
+      containerStyle.height = this.calculateHeight();
+    }
+
     return (
-      <div className="note-card note-card--edit-note" ref={this.setNodeRef}>
-        <div className="note-card__container">
+      <div style={this.props.rootStyle} className="note-card note-card--edit-note" ref={this.setNodeRef}>
+        <div style={containerStyle} className="note-card__container">
           {ContentEditable({
             className: 'note-card__title',
             data: this.state.title,
@@ -153,5 +172,6 @@ class EditNote extends Component {
 }
 
 EditNote.propTypes = propTypes;
+EditNote.defaultProps = defaultProps;
 
 export default EditNote;

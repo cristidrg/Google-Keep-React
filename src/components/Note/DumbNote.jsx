@@ -17,7 +17,7 @@ function handleKeyDown(action) {
 }
 
 const DumbNote = props => (
-  <div className="note-card" onClick={props.focusNote} onKeyDown={handleKeyDown(props.focusNote)}>
+  <div className={`note-card ${props.class}`} onClick={props.focusNote} onKeyDown={handleKeyDown(props.focusNote)}>
     {Select({ ariaPressed: props.selected, onInteraction: props.selectNote })}
     <div className="note-card__container">
       <div className="note-card__title">{props.title}</div>
@@ -36,6 +36,7 @@ const DumbNote = props => (
 );
 
 DumbNote.propTypes = {
+  class: PropTypes.string,
   title: PropTypes.string,
   note: PropTypes.string,
   selected: PropTypes.bool,
@@ -46,6 +47,7 @@ DumbNote.propTypes = {
 };
 
 DumbNote.defaultProps = {
+  class: '',
   title: '',
   note: '', // These should properly have newline characters and be already trimmed to under 400 characters
   selected: false,

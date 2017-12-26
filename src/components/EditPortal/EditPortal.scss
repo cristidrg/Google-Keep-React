@@ -1,19 +1,37 @@
 .editPortal {
-  background-color: rgba(229,229,229,0.75);
-  display: none;
+  background-color: rgba(229,229,229, 0);
   height: 100vh;
   width: 100vw;
   position: fixed;
   top: 0;
-  transition: opacity .218s ease-in;
-  z-index: 4000;
+  transition: all .17s ease;
+  z-index: -1;
 
   &.editPortal--visible {
+    background-color: rgba(229,229,229, 0.75);
     display: block;
+    z-index: 4000;
   }
 
   .note-card { //TODO: CALC() THIS LATER
-    left: 645px;
-    top: 207.35px;
+    position: fixed;
+    transition: all 0.17s ease;
+    width: 240px;
+
+    .note-card__container {
+      transition: all 0.17s ease;
+    }
+  }
+
+  &.position1 {
+    .note-card {
+      left: 645px !important;
+      top: 207.35px !important;
+      width: 600px;
+
+      .note-card__container {
+        opacity: 1 !important;
+      }
+    }
   }
 }

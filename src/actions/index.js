@@ -1,6 +1,6 @@
 import shortid from 'shortid';
 
-// @REDUX -- Naming Actions
+// @REDUXING -- Naming Actions
 // All the actions are defined here. Each action has a prefix which defines the reducer it will most likely affect.
 const actionType = {
   ADD_NOTE: 'NOTES_ADD',
@@ -50,10 +50,13 @@ function updateNote(noteAttribs) {
   };
 }
 
-function focusNote(id) {
+function focusNote(id, coords) {
   return {
     type: actionType.FOCUS_NOTE,
-    payload: id,
+    payload: {
+      id,
+      coords,
+    },
   };
 }
 
