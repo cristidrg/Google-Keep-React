@@ -27,10 +27,10 @@ The codebase is full of comments explaining techniques I use, I created several 
 * [Event Handling](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40EVENT_HANDLING&type=)
 * [Performance](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40PERFORMANCE&type=)
 * [Opinionated Stuff](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40OPINIONATED&type=)
-* [Misc](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=%5C%40MISC&type=)
-* [TODOs](https://github.com/cristidrg/Google-Keep-React/search?utf8=✓&q=\%40TODO&type=)
+* [Misc](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=MISC&type=)
+* [TODOs](https://github.com/cristidrg/Google-Keep-React/search?utf8=%E2%9C%93&q=TODO&type=)
 
-I also keep a development diary where I describe various tasks I do: LINK
+I also keep a [development diary](https://github.com/cristidrg/Google-Keep-React/tree/master/developmentdiary) where I describe various tasks I do.
 
 I highly suggest playing with the app for five minutes before jumping into the tags, as I will be refering to the certain components and functionality in my tags.
 
