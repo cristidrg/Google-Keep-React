@@ -40,7 +40,9 @@ const propTypes = {
  *  This component makes use of several functions to set references on components, most of these setters have
  *  the same pattern. I made use of array destructuring to shorten my code. The setRef function returns an array
  *  with two functions that are used by the ref setters/handlers.
- *
+ *    -- I no longer use the first value of the destructuring, however I will leave it in the code as this is a nice
+ *  example of leveraging new es features
+ * 
  * @TODO In the future this will be a functional component
  */
 class EditNote extends Component {
@@ -62,12 +64,6 @@ class EditNote extends Component {
     document.addEventListener('mousedown', this.handleClickOutside);
   }
 
-  componentDidUpdate() {
-    if (this.state.note !== this.noteRef.innerText) {
-      this.noteRef.innerText = this.state.note;
-    }
-  }
-
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClickOutside);
   }
@@ -78,12 +74,9 @@ class EditNote extends Component {
         this[attribute + 'Ref'] = node;
       },
       (event) => {
-        const newValue = event.target.innerText;
-        if (newValue.trim().length !== 0 && newValue !== this.state[attribute]) {
-          const updatedAttribute = {};
-          updatedAttribute[attribute] = newValue;
-          this.setState(state => Object.assign({}, state, updatedAttribute));
-        }
+        const updatedAttribute = {};
+        updatedAttribute[attribute] = event.target.value;
+        this.setState(state => Object.assign({}, state, updatedAttribute));
       },
     ];
   }
@@ -100,8 +93,7 @@ class EditNote extends Component {
   }
 
   saveNote() {
-    if (JSON.stringify(this.state) !== JSON.stringify(this.initialState)
-      && (this.titleRef.innerText.trim().length !== 0 || this.noteRef.innerText.trim().length !== 0)) {
+    if (JSON.stringify(this.state) !== JSON.stringify(this.initialState)) {
       this.props.onDone(this.state);
     }
 
@@ -139,7 +131,6 @@ class EditNote extends Component {
         pinned: !prevState.pinned,
       }));
 
-  
     const containerStyle = Object.assign({}, this.props.containerStyle);
     if (this.props.autoSetHeight) {
       containerStyle.height = this.calculateHeight();
@@ -148,19 +139,18 @@ class EditNote extends Component {
     return (
       <div style={this.props.rootStyle} className="note-card note-card--edit-note" ref={this.setNodeRef}>
         <div style={containerStyle} className="note-card__container">
-          {ContentEditable({
-            className: 'note-card__title',
-            data: this.state.title,
-            onInput: this.handleTitleChange,
-            placeholder: strings.title,
-            setRef: this.setTitleRef,
-          })}
+          <ContentEditable
+            className="note-card__title"
+            text={this.state.title}
+            onInput={this.handleTitleChange}
+            placeholder={strings.title}
+          />
           {Pin({ ariaPressed: this.state.pinned, onInteraction: pinNote })}
-          <Textbox
-            editable
+          <ContentEditable
+            className="note-card__textbox note-card__textbox--editable"
+            text={this.state.note}
             onInput={this.handleTextBoxChange}
-            note={this.state.note}
-            setRef={this.setTextBoxRef}
+            placeholder={strings.takeANote}
           />
           <div role="toolbar" className="note-card__toolbar">
             {this.renderToolbarButtons()}

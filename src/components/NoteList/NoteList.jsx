@@ -41,7 +41,7 @@ class NoteList extends Component {
           class={this.props.focusedNoteId === note.id ? 'hide' : ''}
           {...note}
           selectNote={this.props.selectNote(note.id)}
-          focusNote={() => this.focusNote(note.id, idx)}
+          onContainerClick={() => this.focusNote(note.id, idx)}
         />
       ));
 

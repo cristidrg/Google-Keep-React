@@ -4,12 +4,16 @@ import PropTypes from 'prop-types';
 // Used to correct input caret position on paste
 /**
  * @EVENT_HANDLING
- * On paste, we would like to simply keep the text plain, to remove any unwanted representations.
+ * On paste, we would like to simply keep the text plain, to remove any unwanted representations and html style.
  * In addition, React seems to not update the caret position after a paste event.*  Inserting the
  * text via the insertHTML command will fix this.
  *
  * *I currently do not actually understand why this happens as the input event fires after the paste event finishes.
  * Any insight would be appreciated.
+ *  
+ * UPDATE: I fixed my component to not depend on the trick to correctly position the correct. I forcefully update
+ * the component if it's out of sync.
+ *  I also moved this function inside the component the class, initially it was stateless.
  */
 const handlePaste = function (event) {
   event.preventDefault();
@@ -30,10 +34,8 @@ const handlePaste = function (event) {
  * with the actual DOM values. Browser plugins or programming change of such elements will cause
  * input handlers to not fire, thus creating a disparity between the two DOMs.
  *
- * This component does not solve this invariant currently, as I would like to focus on other
- * parts on the project, however one can solve it by transforming it to a stateful component
- * and adding a check between it's DOM contents (via innerText/innerHTML) against the source of truth (Redux/State)
- * in the componentDidUpdate method. This will sync the DOMs on the component's next update, thus preventing a
+ * Checking between the DOM contents against the source of truth in the componentDidUpdate method
+ * keeps the DOM in sync with the VDOM after the next update, thus preventing a
  * fault in the reconciliation algorithm.
  *
  * @OPINIONATED
@@ -41,25 +43,77 @@ const handlePaste = function (event) {
  * I believe that components should not bloat the html with attributes that they won't use in their
  * lifetime.
  */
-const ContentEditable = (props) => {
-  const dynamicAttributes = {
-    className: props.className ? props.className : undefined,
-    ref: props.setRef ? props.setRef : undefined,
-    onInput: props.onInput ? props.onInput : undefined,
-    onBlur: props.onBlur ? props.onBlur : props.onInput ? props.onInput : undefined,
-    'data-placeholder': props.placeholder ? props.placeholder : undefined,
-  };
+class ContentEditable extends Component {
+  constructor(props) {
+    super(props);
+    this.div = null;
+    this.lastText = null;
+    this.setRef = this.setRef.bind(this);
+    this.emitChange = this.emitChange.bind(this);
+    this.handlePaste = this.handlePaste.bind(this);
+  }
 
-  return (
-    <div contentEditable suppressContentEditableWarning {...dynamicAttributes}>
-      {props.data}
-    </div>
-  );
-};
+  shouldComponentUpdate(nextProps) {
+    return nextProps.text !== this.div.innerText;
+  }
+
+  componentDidUpdate() {
+    if (this.props.text !== this.div.innerText) {
+      this.div.innerText = this.props.text;
+    }
+  }
+
+  setRef(node) {
+    this.div = node;
+  }
+
+  handlePaste(event) {
+    event.preventDefault();
+    let text = '';
+    if (event.clipboardData && event.clipboardData.getData) {
+      text = event.clipboardData.getData('text/plain');
+    } else if (window.clipboardData && window.clipboardData.getData) {
+      text = window.clipboardData.getData('Text');
+    }
+    document.execCommand('insertHTML', false, text);
+  }
+
+  emitChange() {
+    const text = this.div.innerText;
+    if (this.props.onInput && text !== this.lastText) {
+      this.props.onInput({
+        target: {
+          value: text,
+        },
+      });
+    }
+    this.lastText = text;
+  }
+
+  render() {
+    const dynamicAttributes = {
+      onBlur: this.props.onBlur ? this.props.onBlur : this.emitChange,
+      'data-placeholder': this.props.placeholder ? this.props.placeholder : undefined,
+    };
+    return (
+      <div
+        contentEditable
+        ref={this.setRef}
+        onInput={this.emitChange}
+        onPaste={this.handlePaste}
+        className={this.props.className}
+        suppressContentEditableWarning
+        {...dynamicAttributes}
+      >
+        {this.props.text}
+      </div>
+    );
+  }
+}
 
 ContentEditable.propTypes = {
   className: PropTypes.string,
-  data: PropTypes.string,
+  text: PropTypes.string,
   onInput: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
   placeholder: PropTypes.func,
