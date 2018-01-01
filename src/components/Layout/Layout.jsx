@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { noteFilters } from '../NoteList/noteSelectors';
 import NoteList from '../NoteList/';
 import TakeNote from '../TakeNote/';
 
@@ -19,7 +20,8 @@ class Layout extends Component {
         <header className="app__header" />
         <div className="left__column" />
         <div className="content">
-          <NoteList />
+          <NoteList filterOptions={{ id: noteFilters.PINNED }} />
+          <NoteList filterOptions={{ id: noteFilters.UNPINNED }} />
           <br />
           <TakeNote />
           <br />

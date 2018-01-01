@@ -13,6 +13,7 @@ const initialState = {
     title: 'Demo Note',
     note: 'A simple note. This showcases a note. Cool!',
     selected: false,
+    pinned: false,
   },
 };
 

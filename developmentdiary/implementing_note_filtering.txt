@@ -1,0 +1,121 @@
+Implementing filtering based on pin/status/tags.
+
+The main challenge of this task is to figure out a way to keep the number of re-renders
+and recomputation of filters on state change to a minimum. Whenever a redux action is dispatched,
+each connect component will be notified and its mapStateToProps method will be called.
+
+We have two essential tools which would help us achieve this goal:
+ - Memoization
+ - Good State Design 
+
+Let's take observations about the note filtering:
+ - We always have a maximum of two lists of notes (pinned/unpinned)
+ - Filtering will occur on tags, status(active/deleted/archived), selected, pinned.
+
+By browsing the application right now we have four operations which will occur over our state:
+ - Adding entities 
+ - Updating entity attributes
+ - Deleting entities
+ - Filtering entities based on up to two attributes 
+
+Obviously, the expensive operation is the filtering of the entities. We can take two approaches
+on this task while still maintaing a normalized state.
+
+Before jumping into the details of the solutions, let's take a look at our relations.
+ Note is over {id, title, note, pinned, selected, status}
+ Tag is over {id, tag}
+
+ The Note relation has one functional dependency: ID -> Title Note Pinned Selected Status
+ This results in ID being a candidate key, thus permitting a BCNF normalization.
+
+ This is the main branching point of our implementation, do we try to decompose our
+ dependency or do we keep it as it is? 
+
+ Without decomposing it, the state will look like: 
+  notes: {
+    [id]: {
+      id
+      title,
+      note,
+      pinned,
+      selected
+    }, ....
+  }
+
+ If we decompose it for filtering purposes we could structure it like following:
+  noteInput: {
+    byId: {
+      title,
+      note
+    },
+    allIds: [id, ...] // all notes  
+  }
+  pinned: {
+    byId: {
+      [id]: T/F,
+    }...
+    allIds: [id,...]
+  },
+  selected: {
+    byId: {
+      [id]: T/F,
+    }...
+    allIds: [id, ...]
+  },
+  status: {
+    byId: {
+      [id]: Status,
+    }...
+    byStatus: {
+      active: [id, ...],
+      deleted: [id, ...],
+      archived: [id, ...],
+    }
+  },
+  ETC...
+
+Thus we are decomposing all of the filterable attributes from our relation.
+
+The latter approach brings a noticeable benefit:
+  Fast access to the ids of notes which are pinned, selected, have a certain status, etc without filtering
+through all of the notes.
+
+The construction of a note will be a demand a little bit of work. Given an ID we would have to map it
+to a note as following:
+ (id) => Object.values(state.entities.note)
+              .reduce((accumulator, currentAttribute) => {
+                accumulator[currentAttribute] = currentAttribute.byId[id]
+                return accumulator;
+              }, {});
+
+Seems good so far. So when we need to get all of the pinned notes we would simply access state.pinned.allIds
+and then map the list of ids to a list of notes using the function described above.
+
+!!! However, there is a big caveat to using this approach, we can't rely on just the id values to memoize filtering operations.
+Keep in mind, that every action dispatched to the store will make each connect component rerender.
+If we need to rerender a list of pinned notes, and nothing changed in our notes entity, we can't determine that using the approach described.
+We can't memoize the list of ids, because even if no id was added/removed, an attribute of the entity may have changed, thus demanding a recomputation.
+So, everytime we have a change in a state, we would have to simply remap the available list of ids to notes.
+
+It is indeed true that the recomputation is fast enough as both V8 and gecko are amazing and all current devices have better computation capacity than Apollo 11,
+making a performance decision at this stage of the application rather premature. I will use the first solution proposed to display usage
+of the reselect library in this project. We can simply JSON.stringify the notes entity and then compare it with the previous cached value to make use
+of memoization.
+
+In a real-world example, I would still go with the first solution at start. If we detect that performance is lacking for users with a lot of notes,
+then depending on the data we collect (action frequency, etc.) I would choose between putting memoizers or implementing the second solution.
+
+I didn't mention the handling of note tags as in both solutions it will be handled in the same way.
+Since there is a many-to-many relationship between the two entities, we would create 
+an associative entity which keeps the relations between notes and tags:
+ notes {}
+ tags {}
+ noteTagRel {
+   byId {
+     [id] {
+       noteId,
+       tagId,
+     },...
+   }
+   allIds: [...ids]
+ }

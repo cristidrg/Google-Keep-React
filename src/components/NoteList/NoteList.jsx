@@ -5,9 +5,10 @@ import DumbNote from '../Note/DumbNote.jsx';
 
 const propTypes = {
   id: PropTypes.string.isRequired,
-  notes: PropTypes.object.isRequired,
+  notes: PropTypes.array.isRequired,
   selectNote: PropTypes.func.isRequired,
   focusedNote: PropTypes.func.isRequired,
+  pinNote: PropTypes.func.isRequired,
 };
 
 class NoteList extends Component {
@@ -33,14 +34,14 @@ class NoteList extends Component {
 
   render() {
     const mapNotes =
-      this.props.notes &&
-      Object.values(this.props.notes).map((note, idx) => (
+      this.props.notes.map((note, idx) => (
         <DumbNote
           key={note.id}
           idx={idx}
           class={this.props.focusedNoteId === note.id ? 'hide' : ''}
           {...note}
           selectNote={this.props.selectNote(note.id)}
+          pinNote={this.props.pinNote(note.id)}
           onContainerClick={() => this.focusNote(note.id, idx)}
         />
       ));
