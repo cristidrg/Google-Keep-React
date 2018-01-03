@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import Portal from './Portal.jsx';
 import EditNote from '../EditNote/';
-import Portal from '../Portal';
 import { appModes } from '../../reducers/appMode';
 
 import './EditPortal.scss';

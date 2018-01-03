@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import strings from '../../strings';
-import NoteButton from '../NoteButton/index.jsx';
 import { defaultNoteState } from '../../reducers/notes';
 
-import Pin from '../Note/Pin';
 import Textbox from '../Note/Textbox';
-import ContentEditable from '../ContentEditable';
+import pin from '../../assets/pin.svg';
+import  { ContentEditable, Button } from '../ElementWrappers/';
 
 const defaultProps = {
   autoSetHeight: false,
@@ -112,14 +111,14 @@ class EditNote extends Component {
       <div key={5} role="button" className="note-card__toolbar__more" />,
       <div key={6} role="button" className="note-card__toolbar__undo" aria-disabled="true" />,
       <div key={7} role="button" className="note-card__toolbar__redo" aria-disabled="true" />,
-      <NoteButton
+      <Button
         key={8}
         role="button"
         className="note-card__toolbar__done"
         onInteraction={this.saveNote}
       >
         {strings.done}
-      </NoteButton>,
+      </Button>,
     ];
     return defaultButtons;
   }
@@ -145,7 +144,13 @@ class EditNote extends Component {
             onInput={this.handleTitleChange}
             placeholder={strings.title}
           />
-          {Pin({ ariaPressed: this.state.pinned, onInteraction: pinNote })}
+          {Button({
+            ariaLabel: strings.pinAria,
+            ariaPressed: this.props.pinned,
+            className: 'note-card__pin',
+            icon: pin,
+            onInteraction: this.props.pinNote,
+          })}
           <ContentEditable
             className="note-card__textbox note-card__textbox--editable"
             text={this.state.note}

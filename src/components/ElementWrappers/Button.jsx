@@ -35,7 +35,7 @@ const handleKeyDown = onInteraction => (event) => {
 
 // @TODO in the future, move the svg html to css background svg encoding
 // to reduce html size.
-const NoteButton = (props) => {
+const Button = (props) => {
   const dynamicAttributes = {};
   if (props.icon) {
     dynamicAttributes.dangerouslySetInnerHTML = { __html: props.icon };
@@ -57,7 +57,7 @@ const NoteButton = (props) => {
   );
 };
 
-NoteButton.propTypes = propTypes;
-NoteButton.defaultProps = defaultProps;
+Button.propTypes = propTypes;
+Button.defaultProps = defaultProps;
 
-export default NoteButton;
+export default Button;

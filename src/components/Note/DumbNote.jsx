@@ -3,18 +3,31 @@ import PropTypes from 'prop-types';
 
 import './Note.scss';
 
-import Pin from './Pin';
-import Select from './Select';
 import Textbox from './Textbox';
+import strings from '../../strings';
+import { pin, select } from '../../assets/';
+import { Button } from '../ElementWrappers/';
 
 //TODO: TRIGGER ON CONTAINER CLICK WHEN CONTAINER IS FOCUSED AND ENTER IS PRESSED
 const DumbNote = (props) => {
   return (
     <div className={`note-card ${props.class}`}>
-      {Select({ ariaPressed: props.selected, onInteraction: props.selectNote })}
+      {Button({
+          ariaLabel: strings.selectAria,
+          ariaPressed: props.selected,
+          className: 'note-card__select',
+          icon: select,
+          onInteraction: props.selectNote,
+        })}
       <div className="note-card__container">
         <div className="note-card__title" onClick={props.onContainerClick}>{props.title}</div>
-        {Pin({ ariaPressed: props.pinned, onInteraction: props.pinNote })}
+        {Button({
+          ariaLabel: strings.pinAria,
+          ariaPressed: props.pinned,
+          className: 'note-card__pin',
+          icon: pin,
+          onInteraction: props.pinNote,
+        })}
         <Textbox onClick={props.onContainerClick} editable={false} note={props.note} />
         <div role="toolbar" className="note-card__toolbar">
           <div role="button" className="note-card__toolbar__remind" />

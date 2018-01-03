@@ -1,31 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-// Used to correct input caret position on paste
-/**
- * @EVENT_HANDLING
- * On paste, we would like to simply keep the text plain, to remove any unwanted representations and html style.
- * In addition, React seems to not update the caret position after a paste event.*  Inserting the
- * text via the insertHTML command will fix this.
- *
- * *I currently do not actually understand why this happens as the input event fires after the paste event finishes.
- * Any insight would be appreciated.
- *  
- * UPDATE: I fixed my component to not depend on the trick to correctly position the correct. I forcefully update
- * the component if it's out of sync.
- *  I also moved this function inside the component the class, initially it was stateless.
- */
-const handlePaste = function (event) {
-  event.preventDefault();
-  let text = '';
-  if (event.clipboardData && event.clipboardData.getData) {
-    text = event.clipboardData.getData('text/plain');
-  } else if (window.clipboardData && window.clipboardData.getData) {
-    text = window.clipboardData.getData('Text');
-  }
-  document.execCommand('insertHTML', false, text);
-};
-
 /**
  * @REACT_BP - @VDOM
  * This component abstracts common operations from a contentEditable div. ContentEditable
@@ -67,6 +42,12 @@ class ContentEditable extends Component {
     this.div = node;
   }
 
+  /* @EVENT_HANDLING
+  * On paste, we would like to simply keep the text plain, to remove any unwanted representations and html style.
+  * In addition, React seems to not update the caret position after a paste event. 
+  * Inserting the text via the insertHTML command will fix both of these issues.
+  *
+  */  
   handlePaste(event) {
     event.preventDefault();
     let text = '';
@@ -122,5 +103,3 @@ ContentEditable.propTypes = {
 };
 
 export default ContentEditable;
-
-export { ContentEditable, handlePaste };

@@ -1,18 +1,5 @@
 import { createSelectorCreator, defaultEqualityCheck } from 'reselect';
 
-const noteFilters = {
-  PINNED: 'PINNED',
-  UNPINNED: 'UNPINNED',
-};
-
-const filterNotes = function (notes, filterOptions) {
-  switch (filterOptions.id) {
-    case noteFilters.PINNED: return notes.filter(note => note.pinned);
-    case noteFilters.UNPINNED: return notes.filter(note => !note.pinned);
-    default: return notes;
-  }
-};
-
 function JSONCompare(cachedValue, currValue) {
   return JSON.stringify(cachedValue) === JSON.stringify(currValue);
 }
@@ -54,6 +41,19 @@ const createNoteFilterSelector = createSelectorCreator(
   memoizeOnFilterTypes,
   JSONCompare,
 );
+
+const noteFilters = {
+  PINNED: 'PINNED',
+  UNPINNED: 'UNPINNED',
+};
+
+const filterNotes = function (notes, filterOptions) {
+  switch (filterOptions.id) {
+    case noteFilters.PINNED: return notes.filter(note => note.pinned);
+    case noteFilters.UNPINNED: return notes.filter(note => !note.pinned);
+    default: return notes;
+  }
+};
 
 function makeNoteFilterSelector() {
   return createNoteFilterSelector(

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { noteFilters } from '../NoteList/noteSelectors';
+import { noteFilters } from '../NoteList/';
 import NoteList from '../NoteList/';
 import TakeNote from '../TakeNote/';
 

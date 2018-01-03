@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { selectNote, focusNote, pinNote } from '../../actions';
-import { makeNoteFilterSelector } from './noteSelectors';
+import { makeNoteFilterSelector, noteFilters } from './selectors';
 
 import NoteList from './NoteList.jsx';
 
@@ -38,3 +38,5 @@ ConnectNoteList.propTypes = {
 };
 
 export default ConnectNoteList;
+
+export { ConnectNoteList, noteFilters };
