@@ -99,7 +99,6 @@ So, everytime we have a change in a state, we would have to simply remap the ava
 UPDATE: I realized later that we can implement memoization in this approach by comparing chunks of data we will map into our object. Below is an example:
  Filtering for all pinned notes:
   Compare between cache and current allIds from pinned, selected, the noteDetails object and the tags for the pinned components.
- I switch to this solution after I finish the back end since I like it more.
      
 It is indeed true that the recomputation is fast enough as both V8 and gecko are amazing and all current devices have better computation capacity than Apollo 11,
 making a performance decision at this stage of the application rather premature. I will use the first solution proposed to display usage

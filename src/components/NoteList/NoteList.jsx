@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 
 import DumbNote from '../Note/DumbNote.jsx';
 
+import './NoteList.scss';
+
 const propTypes = {
   id: PropTypes.string.isRequired,
+  heading: PropTypes.string,
   notes: PropTypes.array.isRequired,
   selectNote: PropTypes.func.isRequired,
   focusedNote: PropTypes.func.isRequired,
@@ -33,7 +36,8 @@ class NoteList extends Component {
   }
 
   render() {
-    const mapNotes =
+    if (this.props.notes.length) {
+      const mapNotes =
       this.props.notes.map((note, idx) => (
         <DumbNote
           key={note.id}
@@ -46,11 +50,17 @@ class NoteList extends Component {
         />
       ));
 
-    return (
-      <div ref={this.setContainerRef}>
-        {mapNotes}
-      </div>
-    );
+      return (
+        <div className="note-list">
+          {this.props.heading ? <p className="note-list__heading" >{this.props.heading}</p> : null }
+          <div className="note-list__container" ref={this.setContainerRef}>
+            {mapNotes}
+          </div>
+        </div>
+      );
+    } else {
+      return (null);
+    }
   }
 }
 

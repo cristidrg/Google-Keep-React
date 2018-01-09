@@ -1,0 +1,19 @@
+.note-list {
+  margin-top: 60px;
+
+  .note-list__heading {
+    color: rgba(0,0,0,.54);
+    font-family: 'Roboto',arial,sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 22px 16px;
+  }
+
+  .note-list__container {
+    display: flex;
+    
+    .note-card {
+      margin: 16px;
+    }
+  }
+}
