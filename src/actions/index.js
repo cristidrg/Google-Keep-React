@@ -9,7 +9,7 @@ const actionType = {
   UPDATE_NOTE: 'NOTES_UPDATE_NOTE',
   SWITCH_MODE: 'APPMODE_SWITCH_MODE',
   FOCUS_NOTE: 'APPMODE_FOCUS_NOTE',
-  UNFOCUS_NOTE: 'APPMODE_UNFOCUS_NOTE',
+  GO_HOME: 'LOCATION_GO_HOME',
 };
 
 function addNote(noteAttribs) {
@@ -62,13 +62,14 @@ function focusNote(id, coords, caretPosition, element) {
   };
 }
 
-function unFocusNote() {
+function goHome() {
   return {
-    type: actionType.UNFOCUS_NOTE,
+    type: actionType.GO_HOME,
   };
 }
 
-const actions = Object.assign({}, addNote, selectNote, pinNote, focusNote, unFocusNote, updateNote);
 
-export { actionType, addNote, selectNote, pinNote, focusNote, unFocusNote, updateNote };
+const actions = Object.assign({}, addNote, selectNote, pinNote, focusNote, goHome, updateNote);
+
+export { actionType, addNote, selectNote, pinNote, focusNote, goHome, updateNote };
 export default actions;

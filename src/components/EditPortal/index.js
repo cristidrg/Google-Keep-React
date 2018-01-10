@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { updateNote, unFocusNote } from '../../actions/index';
+import { updateNote, goHome } from '../../actions/index';
 import EditPortal from './EditPortal.jsx';
 
 function mapStateToProps(state) {
@@ -15,7 +15,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onClose: () => dispatch(unFocusNote()),
+    onClose: () => dispatch(goHome()),
     onDone: noteAttribs => dispatch(updateNote(noteAttribs)),
   };
 }

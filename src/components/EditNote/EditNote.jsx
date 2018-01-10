@@ -42,8 +42,6 @@ const propTypes = {
  *  This component makes use of several functions to set references on components, most of these setters have
  *  the same pattern. I made use of array destructuring to shorten my code. The setRef function returns an array
  *  with two functions that are used by the ref setters/handlers.
- * 
- * @TODO In the future this will be a functional component
  */
 class EditNote extends Component {
   constructor(props) {

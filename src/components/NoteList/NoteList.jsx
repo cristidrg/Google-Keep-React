@@ -26,6 +26,7 @@ class NoteList extends Component {
     this.domNode = node;
   }
 
+  // TODO: Figure a way for the focus animation to work via history 
   focusNote(id, idx, caretPosition, focusedElement) {
     const boundingRect = (this.domNode.children[idx].getBoundingClientRect());
     const coords = {}; // because boundingRect does not have enumerable properties.

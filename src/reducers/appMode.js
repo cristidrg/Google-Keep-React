@@ -10,7 +10,7 @@ function appMode(state = appModes.NORMAL, action) {
   switch (action.type) {
     case actionType.FOCUS_NOTE:
       return appModes.EDIT;
-    case actionType.UNFOCUS_NOTE:
+    case actionType.GO_HOME:
       return appModes.NORMAL;
     default:
       return state;
@@ -21,7 +21,7 @@ function focusedNote(state = {}, action) {
   switch (action.type) {
     case actionType.FOCUS_NOTE:
       return action.payload;
-    case actionType.UNFOCUS_NOTE:
+    case actionType.GO_HOME:
       return {};
     default:
       return state;

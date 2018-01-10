@@ -14,8 +14,13 @@ const propTypes = {
   onDone: PropTypes.func.isRequired,
   mode: PropTypes.string.isRequired,
   noteToEdit: PropTypes.object,
+  noteCoords: PropTypes.object,
   element: PropTypes.string,
   focusPosition: PropTypes.number,
+};
+
+const defaultProps = {
+  noteCoords: {}
 };
 
 const transitions = {
@@ -103,5 +108,6 @@ class EditPortal extends Component {
 }
 
 EditPortal.propTypes = propTypes;
+EditPortal.defaultProps = defaultProps;
 
 export default EditPortal;
