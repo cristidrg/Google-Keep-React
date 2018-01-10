@@ -86,9 +86,13 @@ class EditNote extends Component {
     ];
   }
 
-  //TODO: IMPLEMENT THIS LATER
+  //TODO: Make this better
   calculateHeight() {
-    return '140px';
+    const lines = this.state.note.split("\n").map(text => text.length === 0 ? 1 : Math.ceil(text.length / 70));
+    if (lines.length > 1) {
+      lines.splice(-1, 1);
+    }
+    return `${(lines.reduce((acc, curr) => acc + curr, 0)) * 19 + 38 + 32 + 38}px`;
   }
 
   handleClickOutside(event) {
@@ -130,12 +134,6 @@ class EditNote extends Component {
   }
 
   render() {
-    // Future Redux Props
-    const pinNote = () =>
-      this.setState(prevState => ({
-        pinned: !prevState.pinned,
-      }));
-
     const containerStyle = Object.assign({}, this.props.containerStyle);
     if (this.props.autoSetHeight) {
       containerStyle.height = this.calculateHeight();

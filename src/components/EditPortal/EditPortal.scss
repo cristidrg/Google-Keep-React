@@ -26,11 +26,15 @@
   &.position1 {
     .note-card {
       left: 645px !important;
-      top: 207.35px !important;
+      top: 80px !important;
       width: 600px;
 
       .note-card__container {
         opacity: 1 !important;
+
+        .note-card__textbox {
+          max-height: 600px;
+        }
       }
     }
   }

@@ -26,7 +26,7 @@ const DumbNote = (props) => {
           onInteraction: props.selectNote,
         })}
       <div className="note-card__container">
-        <div className="note-card__title" onClick={props.onContainerClick(noteStrings.TITLE)}>{props.title}</div>
+        {props.title ? <div className="note-card__title" onClick={props.onContainerClick(noteStrings.TITLE)}>{props.title}</div> : (null)}
         {Button({
           ariaLabel: strings.pinAria,
           ariaPressed: props.pinned,

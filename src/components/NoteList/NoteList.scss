@@ -11,6 +11,8 @@
 
   .note-list__container {
     display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
     
     .note-card {
       margin: 16px;

@@ -15,6 +15,12 @@
     >.note-card__select {
       opacity: 1;
     }
+    .note-card__toolbar {
+      opacity: 1;
+    }
+    .note-card__pin {
+      opacity: 1;
+    }
   }
 
   &.note-card--edit-note {
@@ -88,7 +94,8 @@
     .note-card__textbox {
       color: rgba(0, 0, 0, 0.54);
       min-height: auto;
-      padding: 12px 15px 15px 15px;
+      max-height: 450px;
+      padding: 12px 25px 15px 15px;
     }
 
     .note-card__take-note__list,
@@ -129,6 +136,12 @@
     border-radius: 2px;
     position: relative;
     transition: box-shadow 0.218s linear;
+
+    .note-card__textbox {
+      overflow-y: hidden;
+      word-wrap: break-word;
+      max-height: 320px;
+    }
   }
 
   .note-card__title {
@@ -137,7 +150,7 @@
     font-weight: bold;
     line-height: 23px;
     min-height: 28px;
-    max-width: 210px;
+    max-width: 190px;
     overflow: hidden;
     padding: 10px 15px 0px 15px;
     text-align: left;
@@ -163,7 +176,11 @@
     top: 5px;
     height: 26px;
     width: 26px;
-
+    opacity: 0;
+    transition-duration: 0.218s;
+    transition-property: opacity;
+    transition-timing-function: ease-in;
+    
     svg {
       height: 18px;
       width: 18px;
@@ -181,11 +198,14 @@
       }
     }
 
-    &[aria-pressed="true"] svg {
-      fill: #4285f4;
-
-      &:hover {
+    &[aria-pressed="true"] {
+      opacity: 1;
+      svg {
         fill: #4285f4;
+
+        &:hover {
+          fill: #4285f4;
+        }
       }
     }
 
@@ -256,10 +276,6 @@
     transition-duration: 0.218s;
     transition-property: opacity;
     transition-timing-function: ease-in;
-
-    &:hover {
-      opacity: 1;
-    }
 
     > div {
       background-position: center;

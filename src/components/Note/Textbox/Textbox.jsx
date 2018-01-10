@@ -66,9 +66,8 @@ class Textbox extends React.Component {
         className={this.getTextboxClass()}
         contentEditable={false}
         onClick={this.props.onClick}
-      >
-        {textboxText}
-      </div>
+        dangerouslySetInnerHTML={{ __html: textboxText }}
+      />
     );
   }
 }
