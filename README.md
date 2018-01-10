@@ -45,9 +45,8 @@ Simply download the project, run npm install and then run npm run dev.
 I chose to simply clone an existing app rather than creating something new because I wanted to have the requirements and
 design already pinned down to focus on development. 
 
-Current Tasks in order:
+Current Tasks:
  - Implement a basic CRUD back end for notes
- - Decompose the app state for filtering purposes
  - Make the ui a little bit nicer
  - Add note text formatting & resizing
  - Implement note tagging

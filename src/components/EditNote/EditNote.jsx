@@ -19,6 +19,9 @@ const propTypes = {
   noteToEdit: PropTypes.object.isRequired,
   onDone: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  focusTextBox: PropTypes.bool,
+  focusTitle: PropTypes.bool,
+  focusPosition: PropTypes.number,
 };
 
 /**
@@ -39,8 +42,6 @@ const propTypes = {
  *  This component makes use of several functions to set references on components, most of these setters have
  *  the same pattern. I made use of array destructuring to shorten my code. The setRef function returns an array
  *  with two functions that are used by the ref setters/handlers.
- *    -- I no longer use the first value of the destructuring, however I will leave it in the code as this is a nice
- *  example of leveraging new es features
  * 
  * @TODO In the future this will be a functional component
  */
@@ -61,6 +62,11 @@ class EditNote extends Component {
 
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
+    if (this.props.focusTextBox) {
+      this.noteRef.focusDivAtPosition(this.props.focusPosition);
+    } else if (this.props.focusTitle) {
+      this.titleRef.focusDivAtPosition(this.props.focusPosition);
+    }
   }
 
   componentWillUnmount() {
@@ -143,6 +149,7 @@ class EditNote extends Component {
             text={this.state.title}
             onInput={this.handleTitleChange}
             placeholder={strings.title}
+            ref={this.setTitleRef}
           />
           {Button({
             ariaLabel: strings.pinAria,
@@ -156,6 +163,7 @@ class EditNote extends Component {
             text={this.state.note}
             onInput={this.handleTextBoxChange}
             placeholder={strings.takeANote}
+            ref={this.setTextBoxRef}
           />
           <div role="toolbar" className="note-card__toolbar">
             {this.renderToolbarButtons()}

@@ -8,6 +8,8 @@ function mapStateToProps(state) {
     mode: state.appMode,
     noteToEdit: state.notes[state.focusedNote.id],
     noteCoords: state.focusedNote.coords,
+    focusPosition: state.focusedNote.caretPosition,
+    element: state.focusedNote.element,
   };
 }
 

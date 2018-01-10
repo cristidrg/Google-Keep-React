@@ -50,12 +50,14 @@ function updateNote(noteAttribs) {
   };
 }
 
-function focusNote(id, coords) {
+function focusNote(id, coords, caretPosition, element) {
   return {
     type: actionType.FOCUS_NOTE,
     payload: {
       id,
       coords,
+      caretPosition,
+      element,
     },
   };
 }

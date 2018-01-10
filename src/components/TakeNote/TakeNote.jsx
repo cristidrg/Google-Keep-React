@@ -53,7 +53,7 @@ class TakeNote extends Component {
     if (this.state.takeNoteExpand) {
       return (
         <div className="note-card note-card--take-note">
-          <EditNote noteToEdit={defaultNoteState} onClose={this.takeNoteRetract} onDone={this.props.onDone} />
+          <EditNote focusTextBox focusPosition={0} noteToEdit={defaultNoteState} onClose={this.takeNoteRetract} onDone={this.props.onDone} />
         </div>
       );
     } else {

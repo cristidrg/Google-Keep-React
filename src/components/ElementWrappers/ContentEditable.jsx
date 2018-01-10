@@ -26,6 +26,7 @@ class ContentEditable extends Component {
     this.setRef = this.setRef.bind(this);
     this.emitChange = this.emitChange.bind(this);
     this.handlePaste = this.handlePaste.bind(this);
+    this.focusDivAtPosition = this.focusDivAtPosition.bind(this);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -71,6 +72,18 @@ class ContentEditable extends Component {
     this.lastText = text;
   }
 
+  focusDivAtPosition(position) {
+    this.div.focus();
+    if (position > 0) {
+      const range = document.createRange();
+      range.setStart(this.div.firstChild, position);
+      range.setEnd(this.div.firstChild, position);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  }
+
   render() {
     const dynamicAttributes = {
       onBlur: this.props.onBlur ? this.props.onBlur : this.emitChange,
@@ -99,7 +112,6 @@ ContentEditable.propTypes = {
   onBlur: PropTypes.func,
   placeholder: PropTypes.func,
   setRef: PropTypes.func,
-  ref: PropTypes.func,
 };
 
 export default ContentEditable;

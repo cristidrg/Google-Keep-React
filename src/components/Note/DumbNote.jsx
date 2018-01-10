@@ -9,6 +9,12 @@ import { pin, select } from '../../assets/';
 import { Button } from '../ElementWrappers/';
 
 //TODO: TRIGGER ON CONTAINER CLICK WHEN CONTAINER IS FOCUSED AND ENTER IS PRESSED
+
+const noteStrings = {
+  TITLE: 'title',
+  TEXTBOX: 'textbox',
+};
+
 const DumbNote = (props) => {
   return (
     <div className={`note-card ${props.class}`}>
@@ -20,7 +26,7 @@ const DumbNote = (props) => {
           onInteraction: props.selectNote,
         })}
       <div className="note-card__container">
-        <div className="note-card__title" onClick={props.onContainerClick}>{props.title}</div>
+        <div className="note-card__title" onClick={props.onContainerClick(noteStrings.TITLE)}>{props.title}</div>
         {Button({
           ariaLabel: strings.pinAria,
           ariaPressed: props.pinned,
@@ -28,7 +34,7 @@ const DumbNote = (props) => {
           icon: pin,
           onInteraction: props.pinNote,
         })}
-        <Textbox onClick={props.onContainerClick} editable={false} note={props.note} />
+        <Textbox onClick={props.onContainerClick(noteStrings.TEXTBOX)} editable={false} note={props.note} />
         <div role="toolbar" className="note-card__toolbar">
           <div role="button" className="note-card__toolbar__remind" />
           <div role="button" className="note-card__toolbar__collaborator" />
@@ -61,4 +67,5 @@ DumbNote.defaultProps = {
   pinned: false,
 };
 
+export { noteStrings, DumbNote };
 export default DumbNote;

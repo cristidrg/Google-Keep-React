@@ -26,13 +26,13 @@ class NoteList extends Component {
     this.domNode = node;
   }
 
-  focusNote(id, idx) {
+  focusNote(id, idx, caretPosition, focusedElement) {
     const boundingRect = (this.domNode.children[idx].getBoundingClientRect());
     const coords = {}; // because boundingRect does not have enumerable properties.
     coords.top = boundingRect.top;
     coords.left = boundingRect.left;
     coords.height = boundingRect.height;
-    this.props.focusNote(id, coords);
+    this.props.focusNote(id, coords, caretPosition, focusedElement);
   }
 
   render() {
@@ -46,7 +46,7 @@ class NoteList extends Component {
           {...note}
           selectNote={this.props.selectNote(note.id)}
           pinNote={this.props.pinNote(note.id)}
-          onContainerClick={() => this.focusNote(note.id, idx)}
+          onContainerClick={focusedElement => () => { this.focusNote(note.id, idx, window.getSelection().focusOffset, focusedElement); }}
         />
       ));
 

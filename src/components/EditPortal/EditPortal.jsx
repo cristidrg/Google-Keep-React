@@ -6,6 +6,7 @@ import Portal from './Portal.jsx';
 import EditNote from '../EditNote/';
 import { appModes } from '../../reducers/appMode';
 
+import { noteStrings } from '../Note/';
 import './EditPortal.scss';
 
 const propTypes = {
@@ -13,6 +14,8 @@ const propTypes = {
   onDone: PropTypes.func.isRequired,
   mode: PropTypes.string.isRequired,
   noteToEdit: PropTypes.object,
+  element: PropTypes.string,
+  focusPosition: PropTypes.number,
 };
 
 const transitions = {
@@ -87,6 +90,9 @@ class EditPortal extends Component {
               rootStyle={rootStyle}
               containerStyle={containerStyle}
               autoSetHeight={this.state.transition === transitions.LOADING}
+              focusTextBox={this.props.element === noteStrings.TEXTBOX}
+              focusTitle={this.props.element === noteStrings.TITLE}
+              focusPosition={this.props.focusPosition}
             />
             : ''
           }
