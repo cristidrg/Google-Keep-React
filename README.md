@@ -34,21 +34,15 @@ I also keep a [development diary](https://github.com/cristidrg/Google-Keep-React
 
 I highly suggest playing with the app for five minutes before jumping into the tags, as I will be refering to the certain components and functionality in my tags.
 
-Below you will find an image with the names I use for various components in the page:
-
-IMAGE-TBD
-
 Installation
 
-Simply download the project, run npm install and then run npm run dev.
+Simply download the project, run npm install and then run npm run dev. The project runs on http://localhost:9000/
 
 I chose to simply clone an existing app rather than creating something new because I wanted to have the requirements and
 design already pinned down to focus on development. 
 
 Current Tasks:
  - Implement a basic CRUD back end for notes
- - Make the ui a little bit nicer
- - Add note text formatting & resizing
  - Implement note tagging
  - Implement history and routes
  ... TBD
