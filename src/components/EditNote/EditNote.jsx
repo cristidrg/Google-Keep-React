@@ -50,9 +50,10 @@ class EditNote extends Component {
     super(props);
     this.state = props.noteToEdit;
     this.initialState = props.noteToEdit;
-    this.renderToolbarButtons = this.renderToolbarButtons.bind(this);
-    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.saveNote = this.saveNote.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.renderToolbarButtons = this.renderToolbarButtons.bind(this);
+    this.handleContainerKeyDown = this.handleContainerKeyDown.bind(this);
 
     this.setRef = this.setRef.bind(this);
     [this.setNodeRef] = this.setRef('node');
@@ -113,6 +114,17 @@ class EditNote extends Component {
     }
   }
 
+  handleContainerKeyDown(event) {
+    if (event.target.classList.contains('note-card__title')) {
+      if (event.keyCode == '13') {
+        if (window.getSelection().anchorOffset === this.state.title.length) {
+          this.noteRef.focusDivAtPosition();
+        }
+        event.preventDefault(); // TODO: move this up to allow multiple lines for title and redo calculateHeight function
+      }
+    }
+  }
+
   saveNote() {
     if (JSON.stringify(this.state) !== JSON.stringify(this.initialState)) {
       this.props.onDone(this.state);
@@ -153,7 +165,7 @@ class EditNote extends Component {
 
     return (
       <div style={this.props.rootStyle} className="note-card note-card--edit-note" ref={this.setNodeRef}>
-        <div style={containerStyle} className="note-card__container">
+        <div style={containerStyle} className="note-card__container" onKeyDown={this.handleContainerKeyDown}>
           <ContentEditable
             className="note-card__title"
             text={this.state.title}

@@ -74,7 +74,7 @@ class ContentEditable extends Component {
 
   focusDivAtPosition(position) {
     this.div.focus();
-    if (position > 0) {
+    if (position > 0 && this.div.firstChild !== null) {
       const range = document.createRange();
       range.setStart(this.div.firstChild, position);
       range.setEnd(this.div.firstChild, position);
