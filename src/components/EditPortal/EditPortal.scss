@@ -4,7 +4,7 @@
   width: 100vw;
   position: fixed;
   top: 0;
-  transition: all .17s ease;
+  transition: all 1s ease;
   z-index: -1;
 
   &.editPortal--visible {
@@ -15,11 +15,11 @@
 
   .note-card { //TODO: CALC() THIS LATER
     position: fixed;
-    transition: all 0.17s ease;
+    transition: all 0.20s ease;
     width: 240px;
 
     .note-card__container {
-      transition: all 0.17s ease;
+      transition: all 0.20s ease;
     }
   }
 

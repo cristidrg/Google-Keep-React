@@ -14,17 +14,22 @@ const propTypes = {
   onDone: PropTypes.func.isRequired,
   mode: PropTypes.string.isRequired,
   noteToEdit: PropTypes.object,
-  noteCoords: PropTypes.object,
-  element: PropTypes.string,
-  focusPosition: PropTypes.number,
+  focusedElement: PropTypes.string,
+  caretPosition: PropTypes.number,
 };
 
 const defaultProps = {
-  noteCoords: {}
+  noteToEdit: {
+    title: '',
+    note: '',
+    selected: false, 
+    pinned: false,
+  },
 };
 
 const transitions = {
-  WAITING: 'waiting',
+  IDLE: 'idle',
+  INITIATED: 'initiated',
   LOADING: 'loading',
   EXITING: 'exiting',
 };
@@ -34,19 +39,47 @@ class EditPortal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      transition: transitions.WAITING,
+      transition: transitions.IDLE,
+      transitionPositionTop: 0,
+      transitionPositionLeft: 0,
+      transitionHeight: 0,
     };
     this.container = null;
-    this.handleClose = this.handleClose.bind(this);
+    this.onDone = this.onDone.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.setContainerRef = this.setContainerRef.bind(this);
     this.handleTransitionEnd = this.handleTransitionEnd.bind(this);
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.mode !== appModes.EDIT && this.props.mode === appModes.EDIT) {
+      const noteCoords = document.querySelector('.hide').getBoundingClientRect();
+      this.setState(() => ({
+        transitionPositionTop: noteCoords.top,
+        transitionPositionLeft: noteCoords.left,
+        transitionHeight: noteCoords.height,
+        transition: transitions.INITIATED,
+      }));
+    } else if (this.state.transition === transitions.INITIATED) {
       setTimeout(() => {
         this.setState(() => ({ transition: transitions.LOADING }));
       }, 50);
+    } else if (prevProps.mode === appModes.EDIT && this.props.mode !== appModes.EDIT) {
+      this.setState(() => ({
+        transition: transitions.EXITING,
+      }));
+    }
+  }
+
+  onClose() {
+    if (this.props.mode === appModes.EDIT) {
+      this.props.onClose();
+    }
+  }
+
+  onDone(noteAttribs) {
+    if (this.props.mode === appModes.EDIT) {
+      this.props.onDone(noteAttribs);
     }
   }
 
@@ -54,14 +87,9 @@ class EditPortal extends Component {
     this.container = node;
   }
 
-  handleClose() {
-    this.setState(() => ({ transition: transitions.EXITING }));
-  }
-
   handleTransitionEnd() {
     if (this.state.transition === transitions.EXITING) {
-      this.props.onClose();
-      this.setState(() => ({ transition: transitions.WAITING}));
+      this.setState(() => ({ transition: transitions.IDLE }));
     }
   }
 
@@ -70,37 +98,38 @@ class EditPortal extends Component {
     const editPortalClass = classNames({
       editPortal: true,
       position1: this.state.transition === transitions.LOADING,
-      'editPortal editPortal--visible': this.props.mode === appModes.EDIT,
+      'editPortal editPortal--visible': this.state.transition !== transitions.IDLE,
     });
 
-    if (this.props.mode === appModes.EDIT) {
+    if (this.state.transition !== transitions.IDLE) {
       rootStyle = {
-        top: this.props.noteCoords.top,
-        left: this.props.noteCoords.left,
+        top: this.state.transitionPositionTop,
+        left: this.state.transitionPositionLeft,
       };
       containerStyle = {
         opacity: 0,
-        height: this.props.noteCoords.height + 'px',
+        height: this.state.transitionHeight + 'px',
+      };
+    } else {
+      rootStyle = {
+        display: 'none',
       };
     }
 
     return (
       <Portal>
         <div ref={this.setContainerRef} onTransitionEnd={this.handleTransitionEnd} className={editPortalClass}>
-          {this.props.mode === appModes.EDIT ?
-            <EditNote
-              noteToEdit={this.props.noteToEdit}
-              onClose={this.handleClose}
-              onDone={this.props.onDone}
-              rootStyle={rootStyle}
-              containerStyle={containerStyle}
-              autoSetHeight={this.state.transition === transitions.LOADING}
-              focusTextBox={this.props.element === noteStrings.TEXTBOX}
-              focusTitle={this.props.element === noteStrings.TITLE}
-              focusPosition={this.props.focusPosition}
-            />
-            : ''
-          }
+          <EditNote
+            noteToEdit={this.props.noteToEdit}
+            onClose={this.onClose}
+            onDone={this.onDone}
+            rootStyle={rootStyle}
+            containerStyle={containerStyle}
+            autoSetHeight={this.state.transition === transitions.LOADING}
+            focusTextBox={this.props.focusedElement === noteStrings.TEXTBOX}
+            focusTitle={this.props.focusedElement === noteStrings.TITLE}
+            caretPosition={this.props.caretPosition}
+          />
         </div>
       </Portal>
     );

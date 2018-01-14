@@ -27,7 +27,7 @@ function mapDispatchToProps(dispatch) {
   return {
     pinNote: id => () => dispatch(pinNote(id)),
     selectNote: id => () => dispatch(selectNote(id)),
-    focusNote: (id, coords, caretPosition, element) => dispatch(focusNote(id, coords, caretPosition, element)),
+    focusNote: (id, caretPosition, element) => dispatch(focusNote(id, caretPosition, element)),
   };
 }
 

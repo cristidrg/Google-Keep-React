@@ -12,6 +12,8 @@ const defaultProps = {
   autoSetHeight: false,
   rootStyle: {},
   containerStyle: {},
+  focusTextBox: false,
+  focusTitle: false,  
 };
 
 const propTypes = {
@@ -21,7 +23,7 @@ const propTypes = {
   onClose: PropTypes.func.isRequired,
   focusTextBox: PropTypes.bool,
   focusTitle: PropTypes.bool,
-  focusPosition: PropTypes.number,
+  caretPosition: PropTypes.number,
 };
 
 /**
@@ -61,9 +63,21 @@ class EditNote extends Component {
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
     if (this.props.focusTextBox) {
-      this.noteRef.focusDivAtPosition(this.props.focusPosition);
+      this.noteRef.focusDivAtPosition(this.props.caretPosition);
     } else if (this.props.focusTitle) {
-      this.titleRef.focusDivAtPosition(this.props.focusPosition);
+      this.titleRef.focusDivAtPosition(this.props.caretPosition);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (JSON.stringify(nextProps.noteToEdit) !== JSON.stringify(this.props.noteToEdit)) {
+      this.setState(() => nextProps.noteToEdit, () => {
+        if (nextProps.focusTextBox) {
+          setTimeout(() => this.noteRef.focusDivAtPosition(this.props.caretPosition), 0);
+        } else if (nextProps.focusTitle) {
+          setTimeout(() => this.titleRef.focusDivAtPosition(this.props.caretPosition), 0);
+        }
+      });
     }
   }
 
