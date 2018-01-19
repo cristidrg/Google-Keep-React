@@ -4,9 +4,9 @@ import classNames from 'classnames';
 
 import Portal from './Portal.jsx';
 import EditNote from '../EditNote/';
-import { appModes } from '../../reducers/appMode';
-
 import { noteStrings } from '../Note/';
+import { appModes } from '../../reducers/appMode';
+import { Animate4Steps, animationStyle } from '../Animations/';
 import './EditPortal.scss';
 
 const propTypes = {
@@ -27,19 +27,11 @@ const defaultProps = {
   },
 };
 
-const transitions = {
-  IDLE: 'idle',
-  INITIATED: 'initiated',
-  LOADING: 'loading',
-  EXITING: 'exiting',
-};
-
 // @EVENT_HANDLING @PERFORMANCE -- for a description of this class, check the implementing a click on note animation devDiary.
 class EditPortal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      transition: transitions.IDLE,
       transitionPositionTop: 0,
       transitionPositionLeft: 0,
       transitionHeight: 0,
@@ -47,8 +39,7 @@ class EditPortal extends Component {
     this.container = null;
     this.onDone = this.onDone.bind(this);
     this.onClose = this.onClose.bind(this);
-    this.setContainerRef = this.setContainerRef.bind(this);
-    this.handleTransitionEnd = this.handleTransitionEnd.bind(this);
+    this.setTransitionRef = this.setTransitionRef.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -58,16 +49,10 @@ class EditPortal extends Component {
         transitionPositionTop: noteCoords.top,
         transitionPositionLeft: noteCoords.left,
         transitionHeight: noteCoords.height,
-        transition: transitions.INITIATED,
       }));
-    } else if (this.state.transition === transitions.INITIATED) {
-      setTimeout(() => {
-        this.setState(() => ({ transition: transitions.LOADING }));
-      }, 50);
+      this.transition.initiateTransition();
     } else if (prevProps.mode === appModes.EDIT && this.props.mode !== appModes.EDIT) {
-      this.setState(() => ({
-        transition: transitions.EXITING,
-      }));
+      this.transition.initiateExiting();
     }
   }
 
@@ -83,54 +68,59 @@ class EditPortal extends Component {
     }
   }
 
-  setContainerRef(node) {
-    this.container = node;
+  setTransitionRef(node) {
+    this.transition = node;
   }
 
-  handleTransitionEnd() {
-    if (this.state.transition === transitions.EXITING) {
-      this.setState(() => ({ transition: transitions.IDLE }));
+  getTargetStyle() {
+    return {
+      rootStyle: {
+        top: this.state.transitionPositionTop,
+        left: this.state.transitionPositionLeft,
+      },
+      containerStyle: {
+        opacity: 0,
+        height: this.state.transitionHeight + 'px',
+      },
+    }
+  }
+
+  getInitialStyle() {
+    return {
+      rootStyle: {
+        display: 'none',
+      }
     }
   }
 
   render() {
-    let rootStyle, containerStyle;
+    // How do we move this style to be handled transitionToCenter also?
+    // Perhaps make an animation component which sets transition status to context
+    // and then use a hoc for children to apply the styles from the context?
+    // <Animation transitionToCenter> (styleApplier(<div>) styleApplier(<EditNote>)) </Animation>
+    // This would leave to a lot of style props being passed around and will look uggly since the style
+    // applier should have styles for each of the 4 states.
     const editPortalClass = classNames({
-      editPortal: true,
-      position1: this.state.transition === transitions.LOADING,
-      'editPortal editPortal--visible': this.state.transition !== transitions.IDLE,
+      editPortal: true, //I don't realy like getTransitionStatus()
+      position1: this.transition.getTransitionStatus() === transitions.LOADING,
+      'editPortal editPortal--visible': this.transition.getTransitionStatus() !== transitions.IDLE,
     });
-
-    if (this.state.transition !== transitions.IDLE) {
-      rootStyle = {
-        top: this.state.transitionPositionTop,
-        left: this.state.transitionPositionLeft,
-      };
-      containerStyle = {
-        opacity: 0,
-        height: this.state.transitionHeight + 'px',
-      };
-    } else {
-      rootStyle = {
-        display: 'none',
-      };
-    }
-
+     
     return (
       <Portal>
-        <div ref={this.setContainerRef} onTransitionEnd={this.handleTransitionEnd} className={editPortalClass}>
-          <EditNote
-            noteToEdit={this.props.noteToEdit}
-            onClose={this.onClose}
-            onDone={this.onDone}
-            rootStyle={rootStyle}
-            containerStyle={containerStyle}
-            autoSetHeight={this.state.transition === transitions.LOADING}
-            focusTextBox={this.props.focusedElement === noteStrings.TEXTBOX}
-            focusTitle={this.props.focusedElement === noteStrings.TITLE}
-            caretPosition={this.props.caretPosition}
-          />
-        </div>
+        <Animate4Steps ref={this.setTransitionRef} >
+          <div className={editPortalClass}>
+              <EditNote
+                noteToEdit={this.props.noteToEdit}
+                onClose={this.onClose}
+                onDone={this.onDone}
+                autoSetHeight={this.state.transition === transitions.LOADING}
+                focusTextBox={this.props.focusedElement === noteStrings.TEXTBOX}
+                focusTitle={this.props.focusedElement === noteStrings.TITLE}
+                caretPosition={this.props.caretPosition}
+              />
+          </div>
+        </Animate4Steps>
       </Portal>
     );
   }
