@@ -1,6 +1,7 @@
 /**
  * @FP --- Composition
- * This function allows the execution a set of functions with the same given arguments in serial.
+ * This function calls the given functions in order with the given arguments.
+ * There is no return value.
  */
 const join = function (...functions) {
   return function (...args) {
