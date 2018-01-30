@@ -11,6 +11,14 @@
     background-color: rgba(229,229,229, 0.75);
     display: block;
     z-index: 4000;
+
+    .note-card__container {
+      opacity: 1 !important;
+
+      .note-card__textbox {
+        max-height: 600px;
+      }
+    }
   }
 
   .note-card { //TODO: CALC() THIS LATER
@@ -20,22 +28,6 @@
 
     .note-card__container {
       transition: all 0.20s ease;
-    }
-  }
-
-  &.position1 {
-    .note-card {
-      left: 645px !important;
-      top: 80px !important;
-      width: 600px;
-
-      .note-card__container {
-        opacity: 1 !important;
-
-        .note-card__textbox {
-          max-height: 600px;
-        }
-      }
     }
   }
 }

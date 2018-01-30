@@ -57,6 +57,8 @@ class EditPortal extends Component {
       this.setState(() => ({
         transitionPositionTop: noteCoords.top,
         transitionPositionLeft: noteCoords.left,
+        transitionX: noteCoords.x,
+        transitionY: noteCoords.y,
         transitionHeight: noteCoords.height,
         transition: transitions.INITIATED,
       }));
@@ -94,26 +96,25 @@ class EditPortal extends Component {
   }
 
   render() {
-    let rootStyle, containerStyle;
     const editPortalClass = classNames({
       editPortal: true,
-      position1: this.state.transition === transitions.LOADING,
-      'editPortal editPortal--visible': this.state.transition !== transitions.IDLE,
+      'editPortal--visible': this.state.transition !== transitions.IDLE,
     });
+    
+    const rootStyle = {
+      top: this.state.transition !== transitions.IDLE ? this.state.transitionPositionTop : 'auto',
+      left: this.state.transition !== transitions.IDLE ? this.state.transitionPositionLeft : 'auto',
+      width: this.state.transition === transitions.LOADING ? '600px' : '300px',
+      transform: this.state.transition === transitions.LOADING ? 
+      `translate(${document.body.clientWidth / 2 - 300 - this.state.transitionX}px,
+        ${document.body.clientHeight / 2 - this.state.transitionY}px)`
+      : '',
+      display: this.state.transition === transitions.IDLE ? 'none' : 'block',
+    }
 
-    if (this.state.transition !== transitions.IDLE) {
-      rootStyle = {
-        top: this.state.transitionPositionTop,
-        left: this.state.transitionPositionLeft,
-      };
-      containerStyle = {
-        opacity: 0,
-        height: this.state.transitionHeight + 'px',
-      };
-    } else {
-      rootStyle = {
-        display: 'none',
-      };
+    const containerStyle = {
+      opacity: this.state.transition === transitions.LOADING ? 0 : 1,
+      height: this.state.transition !== transitions.IDLE ? this.state.transitionHeight + 'px' : 0,
     }
 
     return (
