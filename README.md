@@ -36,7 +36,7 @@ I highly suggest playing with the app for five minutes before jumping into the t
 
 Installation
 
-Simply download the project, run npm install and then run npm run dev. The project runs on http://localhost:9000/
+Simply download the project, run `npm install` and then run `npm run dev`. The project runs on http://localhost:9000/
 
 I chose to simply clone an existing app rather than creating something new because I wanted to have the requirements and
 design already pinned down to focus on development. 
